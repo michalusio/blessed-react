@@ -1,0 +1,21 @@
+{
+  "name": "exalted",
+  "version": "0.1",
+  "description": "A re-blessed wrapper providing a TSX way of defining the nodes",
+  "main": "dist/index.js",
+  "author": "Michał Isalski",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "start": "yarn build && yarn start:no-build",
+    "start:no-build": "node .",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "reblessed": "^0.1.84",
+    "tslib": "^2.4.0"
+  },
+  "devDependencies": {
+    "@types/blessed": "^0.1.19"
+  }
+}
