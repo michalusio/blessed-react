@@ -1,6 +1,6 @@
 {
   "name": "create-exalted-app",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "type": "module",
   "node": ">=14.16",
   "exports": "./dist/index.js",
@@ -16,7 +16,8 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/michalusio/exalted.git"
+    "url": "https://github.com/michalusio/exalted.git",
+    "directory": "create-exalted-app"
   },
   "private": false,
   "dependencies": {

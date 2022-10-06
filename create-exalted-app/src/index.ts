@@ -74,7 +74,7 @@ inquirer.prompt(questions).then(answers => {
     const paths = { cwd, dataPath };
     generatePackageJson(answers, paths);
     generateTsConfigJson(answers, paths);
-    copyFileSync(resolve(paths.dataPath, './.gitignore'), resolve(paths.cwd, './.gitignore'));
+    copyFileSync(resolve(paths.dataPath, './git.ignore'), resolve(paths.cwd, './.gitignore'));
     generateIndexFile(answers, paths);
     createGitRepo(cwd);
     addPackages(answers, cwd);
@@ -148,15 +148,15 @@ function createGitRepo(cwd: string) {
 function addPackages(answers: Record<string, string>, cwd: string) {
     info('Adding required packages...');
     const packageManagerCall = answers['packageManager'] === 'yarn' ? 'yarn add' : 'npm i';
-    // const result = exec(packageManagerCall + ' exalted', {
-    //     cwd,
-    // });
-    // if (result.code === 0) {
-    //     info('Dependencies installed');
-    // } else {
-    //     error(result);
-    //     process.exit(1);
-    // }
+    const result = exec(packageManagerCall + ' exalted', {
+        cwd,
+    });
+    if (result.code === 0) {
+        info('Dependencies installed');
+    } else {
+        error(result);
+        process.exit(1);
+    }
 
     const resultDev = exec(packageManagerCall + ' typescript tslib -D', {
         cwd,
