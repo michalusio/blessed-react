@@ -1,8 +1,11 @@
-import { box, progressbar, Widgets } from "reblessed";
+import { box, list, progressbar, text, Widgets } from "reblessed";
+import { ItemOrArray } from "./utils";
 
 export const blessedElements = {
   "boxElement": box,
-  'progressBar': progressbar
+  "progressBar": progressbar,
+  "list": list,
+  "text": text
 };
 
 type elements = typeof blessedElements;
@@ -20,18 +23,14 @@ declare global {
     interface Component {
       (
         properties?: { [key: string]: any },
-        children?: ExaltedNode[]
-      ): ExaltedNode;
+        children?: ItemOrArray<Element>[]
+      ): Element;
     }
   }
 }
 
-export type ExaltedNode = PureExaltedNode | string | number | boolean;
-
-type PureExaltedNode = Readonly<{
-  /**
-   * The `reblessed` node this node references. `undefined` for custom components.
-   */
-  _blessedNode?: Widgets.BlessedElement;
+export type ExaltedNode = Readonly<{
+  _name: string;
   _children: ExaltedNode[];
-}>;
+  _rendered: ExaltedNode | Widgets.BlessedElement | ExaltedNode[];
+}> | string | number | boolean;

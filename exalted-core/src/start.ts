@@ -1,8 +1,10 @@
 import { box, screen, Widgets } from "reblessed";
-import { hookId } from "./hooks/hook-base";
+import { hookState } from "./hooks/hook-base";
 import { ExaltedNode } from "./jsx";
+import { isElement } from "./utils";
 
 let rootComponent: (() => ExaltedNode) | undefined;
+/** @internal */
 export let screenObject: Widgets.Screen | undefined;
 
 export function Bootstrap(component: () => ExaltedNode): void {
@@ -26,12 +28,20 @@ export function forceRerender() {
 function rerender() {
   if (!rootComponent || !screenObject) return;
   screenObject.children = [];
-  const node = rootComponent();
-  if (typeof node === 'number' || typeof node === 'string') {
-    screenObject.append(box({ width: '100%', height: '100%', content: node + '' }));
-  } else if (node._blessedNode) {
-    screenObject.append(node._blessedNode);
-  }
+  addIntoScreen(rootComponent());
   screenObject.render();
-  hookId.value = 0;
+  hookState.value = 0;
+}
+
+function addIntoScreen(exaltedNode: ExaltedNode) {
+  if (!screenObject) return;
+  if (typeof exaltedNode === 'number' || typeof exaltedNode === 'string' || typeof exaltedNode === 'boolean') {
+    screenObject.append(box({ width: '100%', height: '100%', content: exaltedNode + '' }));
+  } else if (isElement(exaltedNode._rendered)) {
+    screenObject.append(exaltedNode._rendered);
+  } else if (Array.isArray(exaltedNode._rendered)) {
+    exaltedNode._rendered.forEach(node => addIntoScreen(node));
+  } else {
+    addIntoScreen(exaltedNode._rendered);
+  }
 }

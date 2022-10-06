@@ -1,10 +1,10 @@
-import { hookId, hookMap, UseEffectCall, UseEffectData } from './hook-base';
+import { hookState, hookMap, UseEffectCall, UseEffectData, hookId } from './hook-base';
 
 export function useEffect(call: UseEffectCall, deps: unknown[]): void {
-  const last = hookMap.get(hookId.value);
+  const last = hookMap.get(hookId());
   if (last && last.type === 'useEffect') {
     if (deps.length === last.lastDeps?.length && deps.every((item, index) => last.lastDeps[index] === item)) {
-      hookId.value++;
+      hookState.value++;
       return;
     } else {
       last.lastCleanup?.();
@@ -16,6 +16,6 @@ export function useEffect(call: UseEffectCall, deps: unknown[]): void {
     lastCleanup: call(),
     lastDeps: deps
   };
-  hookMap.set(hookId.value, ref);
-  hookId.value++;
+  hookMap.set(hookId(), ref);
+  hookState.value++;
 }

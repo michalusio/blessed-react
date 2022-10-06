@@ -1,10 +1,15 @@
 {
   "name": "exalted",
-  "version": "0.1",
+  "version": "0.1.0",
   "description": "A re-blessed wrapper providing a TSX way of defining the nodes",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "author": "Michał Isalski",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/michalusio/exalted.git"
+  },
   "private": false,
   "scripts": {
     "start": "yarn build && yarn start:no-build",
@@ -12,6 +17,7 @@
     "build": "tsc"
   },
   "dependencies": {
+    "@adobe/css-tools": "^4.0.1",
     "reblessed": "^0.1.84",
     "tslib": "^2.4.0"
   },

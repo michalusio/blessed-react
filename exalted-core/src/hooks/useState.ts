@@ -1,18 +1,18 @@
 import { forceRerender } from '../start';
-import { hookId, hookMap, UseStateCall, UseStateData } from './hook-base';
+import { hookState, hookMap, UseStateCall, UseStateData, hookId } from './hook-base';
 
 export function useState<T>(initialValue: T): [T, UseStateCall<T>] {
-  const last = hookMap.get(hookId.value);
+  const last = hookMap.get(hookId());
   if (last && last.type === 'useState') {
-    hookId.value++;
+    hookState.value++;
     return [
       last.ref.value,
       getStateSetter(last.ref)
     ];
   }
   const ref: UseStateData = { type: 'useState', ref: { value: initialValue } };
-  hookMap.set(hookId.value, ref);
-  hookId.value++;
+  hookMap.set(hookId(), ref);
+  hookState.value++;
   return [
     ref.ref.value,
     getStateSetter(ref.ref)
