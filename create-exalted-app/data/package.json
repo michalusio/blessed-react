@@ -1,0 +1,13 @@
+{
+  "name": "${projectName}",
+  "version": "0.0.1",
+  "description": "New project using Exalted",
+  "main": "dist/index.js",
+  "author": "<AUTHOR>",
+  "license": "<LICENSE>",
+  "scripts": {
+    "start": "${packageManagerCall} build && ${packageManagerCall} start:no-build",
+    "start:no-build": "node .",
+    "build": "tsc"
+  }
+}

@@ -9,3 +9,5 @@ export default {
   Bootstrap,
   forceRerender,
 };
+
+import './abc';

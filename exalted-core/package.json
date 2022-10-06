@@ -18,10 +18,10 @@
   },
   "dependencies": {
     "@adobe/css-tools": "^4.0.1",
-    "reblessed": "^0.1.84",
-    "tslib": "^2.4.0"
+    "reblessed": "^0.1.84"
   },
   "devDependencies": {
-    "@types/blessed": "^0.1.19"
+    "@types/blessed": "^0.1.19",
+    "tslib": "^2.4.0"
   }
 }

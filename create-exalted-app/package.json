@@ -1,0 +1,32 @@
+{
+  "name": "create-exalted-app",
+  "version": "0.1.0",
+  "type": "module",
+  "node": ">=14.16",
+  "exports": "./dist/index.js",
+  "bin": {
+    "create-exalted-app": "./dist/index.js"
+  },
+  "scripts": {
+    "run": "yarn build && npm link && create-exalted-app",
+    "build": "tsc"
+  },
+  "description": "Easily scaffold an exalted project!",
+  "author": "Michał Isalski",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/michalusio/exalted.git"
+  },
+  "private": false,
+  "dependencies": {
+    "chalk": "^5.1.0",
+    "inquirer": "^9.1.2",
+    "shelljs": "^0.8.5"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.2",
+    "@types/shelljs": "^0.8.11",
+    "typescript": "^4.8.4"
+  }
+}

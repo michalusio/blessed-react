@@ -1,8 +1,5 @@
 {
   "compilerOptions": {
-
-    "incremental": true,                              /* Enable incremental compilation */
-    "tsBuildInfoFile": "./tsbuild.json",              /* Specify the folder for .tsbuildinfo incremental compilation files. */
     "target": "es2016",                               /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "jsx": "react",                                   /* Specify what JSX code is generated. */
     "jsxFactory": "Exalted.jsx",
