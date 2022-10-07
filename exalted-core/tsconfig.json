@@ -5,9 +5,8 @@
     "jsxFactory": "Exalted.jsx",
     "jsxFragmentFactory": "Exalted.Fragment",
     "lib": ["ES2017"],
-    "module": "AMD",                                  /* Specify what module code is generated. */
+    "module": "CommonJS",                                  /* Specify what module code is generated. */
     "moduleResolution": "node",
-    "outFile": "./dist/index.js",
     "stripInternal": true,
     "declaration": true,                              /* Generate .d.ts files from TypeScript and JavaScript files in your project. */
     "outDir": "./dist",                               /* Specify an output folder for all emitted files. */

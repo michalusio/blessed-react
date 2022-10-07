@@ -1,8 +1,16 @@
-import { Widgets } from "reblessed";
 import { screenObject } from "../start";
 import { useEffect } from "./useEffect";
 
-export function useOnKey(key: string, listener: (ch: any, key: Widgets.Events.IKeyEventArg) => void): void {
+export interface IKeyEventArg {
+  full: string;
+  name: string;
+  shift: boolean;
+  ctrl: boolean;
+  meta: boolean;
+  sequence: string;
+}
+
+export function useOnKey(key: string, listener: (ch: any, key: IKeyEventArg) => void): void {
   useEffect(() => {
     screenObject?.key(key, listener);
     return () => screenObject?.unkey(key, listener);

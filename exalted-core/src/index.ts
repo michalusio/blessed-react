@@ -7,7 +7,5 @@ export default {
   jsx,
   Fragment,
   Bootstrap,
-  forceRerender,
-};
-
-import './abc';
+  forceRerender
+}

@@ -1,4 +1,4 @@
-import { widget, Widgets } from 'reblessed';
+import Reblessed, {blessedElement} from './blessing';
 
 export type Brand<T, V> = T & { __type: V };
 
@@ -6,10 +6,10 @@ export type ItemOrArray<T> = T | T[];
 
 type Constructor<T> = (...args: unknown[]) => T;
 
-const Element = (widget as any).Element as Constructor<Widgets.BlessedElement>;
+const Element = (Reblessed.widget as any).Element as Constructor<blessedElement>;
 
 /** @internal */
-export function isElement(obj: any): obj is Widgets.BlessedElement {
+export function isElement(obj: any): obj is blessedElement {
   return obj instanceof Element;
 }
 

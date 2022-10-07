@@ -8,20 +8,19 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/michalusio/exalted.git"
+    "url": "https://github.com/michalusio/exalted.git",
+    "directory": "exalted-core"
   },
   "private": false,
   "scripts": {
-    "start": "yarn build && yarn start:no-build",
-    "start:no-build": "node .",
     "build": "tsc"
   },
   "dependencies": {
     "@adobe/css-tools": "^4.0.1",
+    "@types/blessed": "^0.1.19",
     "reblessed": "^0.1.84"
   },
   "devDependencies": {
-    "@types/blessed": "^0.1.19",
     "tslib": "^2.4.0"
   }
 }

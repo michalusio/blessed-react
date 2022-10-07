@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "exalted-core"
+		},
+		{
+			"path": "testing-app"
 		}
 	],
 	"settings": {}

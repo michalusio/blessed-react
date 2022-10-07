@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "jsx": "react",
+    "jsxFactory": "Exalted.default.jsx",
+    "jsxFragmentFactory": "Exalted.default.Fragment",
+    "lib": ["ES2022"],
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "outDir": "./dist",
+    "importHelpers": true,
+    "importsNotUsedAsValues": "remove",
+    "noEmitOnError": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+  }
+}

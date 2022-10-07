@@ -1,3 +1,1 @@
-declare module "reblessed" {
-  export * from 'blessed';
-}
+declare module "reblessed";

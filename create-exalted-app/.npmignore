@@ -3,5 +3,6 @@ src/
 node_modules/
 tsbuild.json
 tsconfig.json
+!data/tsconfig.json
 yarn.lock
 .editorconfig

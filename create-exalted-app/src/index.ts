@@ -97,6 +97,7 @@ function generatePackageJson(answers: Record<string, string>, paths: Paths) {
     writeFileSync(packageJsonPath, packageData
         .replace('${projectName}', projectName)
         .replace('${packageManagerCall}', packageManagerCall)
+        .replace('${packageManagerCall}', packageManagerCall)
     )
 }
 

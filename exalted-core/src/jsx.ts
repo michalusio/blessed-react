@@ -1,11 +1,11 @@
-import { box, list, progressbar, text, Widgets } from "reblessed";
+import Reblessed, { blessedElement } from "./blessing";
 import { ItemOrArray } from "./utils";
 
 export const blessedElements = {
-  "boxElement": box,
-  "progressBar": progressbar,
-  "list": list,
-  "text": text
+  "boxElement": Reblessed.box,
+  "progressBar": Reblessed.progressbar,
+  "list": Reblessed.list,
+  "text": Reblessed.text
 };
 
 type elements = typeof blessedElements;
@@ -32,5 +32,5 @@ declare global {
 export type ExaltedNode = Readonly<{
   _name: string;
   _children: ExaltedNode[];
-  _rendered: ExaltedNode | Widgets.BlessedElement | ExaltedNode[];
+  _rendered: ExaltedNode | blessedElement | ExaltedNode[];
 }> | string | number | boolean;

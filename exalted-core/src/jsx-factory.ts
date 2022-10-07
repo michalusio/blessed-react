@@ -1,4 +1,4 @@
-import { Widgets } from "reblessed";
+import { blessedElement } from "./blessing";
 import { hookState } from "./hooks/hook-base";
 import { blessedElements, ExaltedNode } from "./jsx";
 import { getKey } from "./key";
@@ -58,7 +58,7 @@ export default function jsx(
 
 export const Fragment = () => false;
 
-function appendChild(element: Widgets.BlessedElement, child: ExaltedNode) {
+function appendChild(element: blessedElement, child: ExaltedNode) {
   if (typeof child === "string") {
     element.content += child;
     return;
