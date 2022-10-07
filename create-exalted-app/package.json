@@ -1,6 +1,6 @@
 {
   "name": "create-exalted-app",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "type": "module",
   "node": ">=14.16",
   "exports": "./dist/index.js",

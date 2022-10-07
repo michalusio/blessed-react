@@ -2,8 +2,8 @@
   "compilerOptions": {
     "target": "ES2022",
     "jsx": "react",
-    "jsxFactory": "Exalted.default.jsx",
-    "jsxFragmentFactory": "Exalted.default.Fragment",
+    "jsxFactory": "Exalted.jsx",
+    "jsxFragmentFactory": "Exalted.Fragment",
     "lib": ["ES2022"],
     "module": "Node16",
     "moduleResolution": "Node16",

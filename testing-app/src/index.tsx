@@ -1,7 +1,7 @@
 import Exalted from 'exalted';
 
 const App = () => {
-  return <boxElement width={20} height={10} border={'line'} align={'center'} valign={'middle'}>Hello, testing-app!</boxElement>;
+  return <boxelement width={25} height={10} border={'line'} align={'center'} valign={'middle'}>Hello, testing-app!</boxelement>;
 }
 
-Exalted.default.Bootstrap(App);
+Exalted.Bootstrap(App);

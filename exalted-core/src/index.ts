@@ -1,11 +1,4 @@
-import jsx from './jsx-factory';
-import { Bootstrap, forceRerender } from './start';
+export { default as jsx } from './jsx-factory';
+export { Bootstrap, forceRerender } from './start';
 export * from './hooks';
-import { Fragment } from './jsx-factory';
-
-export default {
-  jsx,
-  Fragment,
-  Bootstrap,
-  forceRerender
-}
+export { Fragment } from './jsx-factory';

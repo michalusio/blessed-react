@@ -2,10 +2,14 @@ import Reblessed, { blessedElement } from "./blessing";
 import { ItemOrArray } from "./utils";
 
 export const blessedElements = {
-  "boxElement": Reblessed.box,
-  "progressBar": Reblessed.progressbar,
+  "boxelement": Reblessed.box,
+  "progressbar": Reblessed.progressbar,
   "list": Reblessed.list,
-  "text": Reblessed.text
+  "text": Reblessed.text,
+  "button": Reblessed.button,
+  "checkbox": Reblessed.checkbox,
+  "filemanager": Reblessed.filemanager,
+  "form": Reblessed.form
 };
 
 type elements = typeof blessedElements;

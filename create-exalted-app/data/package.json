@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "New project using Exalted",
   "main": "dist/index.js",
+  "type": "module",
   "author": "<AUTHOR>",
   "license": "<LICENSE>",
   "scripts": {
