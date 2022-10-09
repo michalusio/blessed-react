@@ -1,8 +1,11 @@
 import { hookState, hookMap, UseRefData, hookId } from './hook-base';
 
-export function useRef<T>(): { current?: T };
-export function useRef<T>(initialValue: T): { readonly current: T };
-export function useRef<T>(initialValue?: T): { current?: T } {
+export type MutableRef<T> = { current?: T };
+export type ImmutableRef<T> = { readonly current: T };
+
+export function useRef<T>(): MutableRef<T>;
+export function useRef<T>(initialValue: T): ImmutableRef<T>;
+export function useRef<T>(initialValue?: T): MutableRef<T> {
   const last = hookMap.get(hookId());
   if (last && last.type === 'useRef') {
     hookState.value++;

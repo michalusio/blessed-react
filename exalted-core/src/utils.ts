@@ -4,7 +4,7 @@ export type Brand<T, V> = T & { __type: V };
 
 export type ItemOrArray<T> = T | T[];
 
-type Constructor<T> = (...args: unknown[]) => T;
+export type Constructor<T> = (...args: unknown[]) => T;
 
 const Element = (Reblessed.widget as any).Element as Constructor<blessedElement>;
 

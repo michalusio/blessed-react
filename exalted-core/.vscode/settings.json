@@ -1,10 +1,12 @@
 {
   "files.exclude": {
     "node_modules": true,
-    "dist": true
+    "dist": true,
+    ".parcel-cache": true
   },
   "search.exclude": {
     "node_modules": true,
-    "dist": true
+    "dist": true,
+    ".parcel-cache": true
   }
 }

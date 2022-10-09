@@ -1,7 +1,13 @@
-import Exalted from 'exalted';
+import Exalted, { useOnResize, loadStylesheet } from 'exalted';
+
+const styles = loadStylesheet('./src/styles.css');
 
 const App = () => {
-  return <boxelement width={25} height={10} border={'line'} align={'center'} valign={'middle'}>Hello, testing-app!</boxelement>;
+  useOnResize(Exalted.forceRerender);
+  
+  return <box className={styles.lol}>
+    Hello, testing-app!
+  </box>;
 }
 
 Exalted.Bootstrap(App);

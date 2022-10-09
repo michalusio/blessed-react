@@ -10,5 +10,12 @@
 			"path": "testing-app"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"terminal.integrated.windowsEnableConpty": false,
+		"terminal.integrated.minimumContrastRatio": 1,
+		"npm.autoDetect": "on",
+		"npm.enableRunFromFolder": true,
+		"npm.scriptExplorerAction": "run",
+		"npm.exclude": ["**/create-exalted-app", "**/create-exalted-app/**"]
+	}
 }

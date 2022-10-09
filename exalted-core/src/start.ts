@@ -1,13 +1,23 @@
 import Reblessed, { Screen } from "./blessing";
+import { cursorTo } from 'node:readline';
 import { hookState } from "./hooks/hook-base";
 import { ExaltedNode } from "./jsx";
 import { isElement } from "./utils";
+
+type BootstrapOptions = Readonly<{
+  /**
+   * Automatically re-render the screen every X milliseconds.
+   * Useful for terminals where the resize event does not work.
+   */
+  autoRefresh?: number
+}>;
 
 let rootComponent: (() => ExaltedNode) | undefined;
 /** @internal */
 export let screenObject: Screen | undefined;
 
-export function Bootstrap(component: () => ExaltedNode): void {
+export function Bootstrap(component: () => ExaltedNode, options?: BootstrapOptions): void {
+  options ??= {};
   if (rootComponent || screenObject) throw new Error('Cannot call `Bootstrap` more than once!');
   rootComponent = component;
   screenObject = Reblessed.screen({
@@ -17,6 +27,9 @@ export function Bootstrap(component: () => ExaltedNode): void {
     title: component.name,
     useBCE: true
   });
+  if (options.autoRefresh) {
+    setInterval(forceRerender, options.autoRefresh);
+  }
   rerender();
 }
 
@@ -28,8 +41,19 @@ export function forceRerender() {
 function rerender() {
   if (!rootComponent || !screenObject) return;
   screenObject.children = [];
-  addIntoScreen(rootComponent());
-  screenObject.render();
+  try {
+    addIntoScreen(rootComponent());
+    screenObject.render();
+  } catch (err) {
+    screenObject.destroy();
+    cursorTo(process.stdout, 0, 0, () => {
+      let message = '';
+      if (err instanceof Error) {
+        message = err.message + '\n' + (err.stack ?? '');
+      } else message = JSON.stringify(err);
+      console.error('\033[91;40m'+message+'\033[37;40m');
+    });
+  }
   hookState.value = 0;
 }
 
