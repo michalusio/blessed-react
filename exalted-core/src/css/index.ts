@@ -2,6 +2,7 @@ import CSS from '@adobe/css-tools';
 import { readFileSync } from 'node:fs';
 import { blessedElementsTypes } from '../jsx';
 import { applyBorderStyling } from './border';
+import { applyPaddingStyling } from './padding';
 import { splitProperty, transformPropertyName, transformPropertyValue } from './transforms';
 
 const classIdentifierRegex = /^\.-?(?:[_a-zA-Z]|[\u00A0-\uFFFF])+(?:[_a-zA-Z0-9-]|[\u00A0-\uFFFF])*$/i;
@@ -25,7 +26,7 @@ export function loadStylesheet(path: string): CSSStyleSheet {
   ]))));
 }
 
-const applicableDirectly = ['width', 'height', 'align', 'valign'];
+const applicableDirectly = ['width', 'height', 'align', 'valign', 'top', 'right', 'bottom', 'left'];
 
 export type AnyElement = blessedElementsTypes[keyof blessedElementsTypes];
 
@@ -39,6 +40,7 @@ export function applyClass(element: AnyElement, classData?: CSSClass): void {
     }
   });
   classDataCopy = applyBorderStyling(classDataCopy, element);
+  classDataCopy = applyPaddingStyling(classDataCopy, element);
   element.style = {
     ...element.style,
     ...classDataCopy

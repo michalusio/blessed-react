@@ -1,9 +1,10 @@
 import { splitBorders } from "./border";
+import { splitPaddings } from "./padding";
 
 export function splitProperty(key: string, value: string): [string, string][] {
-  const borderData = splitBorders(key, value);
-  if (borderData) return borderData;
-  return [[key, value]];
+  return splitBorders(key, value)
+      ?? (splitPaddings(key, value)
+      ?? [[key, value]]);
 }
 
 export const transformPropertyName: Record<string, string> = {

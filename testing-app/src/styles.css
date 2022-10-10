@@ -3,7 +3,12 @@
   background-color: #700;
   width: 50%;
   height: 50%;
-  text-align: center;
-  vertical-align: middle;
-  border: 1px ridge white;
+  text-align: right;
+  vertical-align: top;
+  border: 1px solid white;
+  border-left: 0;
+  border-top-width: 0;
+  padding-top: 3px;
+  padding-right: 8px;
+  left: 10px;
 }

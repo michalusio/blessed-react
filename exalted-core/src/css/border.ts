@@ -1,5 +1,6 @@
 import { Border as BorderBroken } from '../blessing';
 import { AnyElement } from ".";
+import { modeArray } from '../utils';
 
 type Border = Omit<BorderBroken, 'bold' | 'underline' | 'fg' | 'bg' > & {
   left?: boolean,
@@ -13,7 +14,18 @@ type Border = Omit<BorderBroken, 'bold' | 'underline' | 'fg' | 'bg' > & {
 };
 
 export function applyBorderStyling(classData: Record<string, string>, element: AnyElement): Record<string, string> {
-  const { 'border-style': borderStyle, 'border-width': borderWidth, 'border-color': borderColor,...rest} = classData;
+  const {
+    'border-color': borderColor,
+    'border-top-style': borderTopStyle,
+    'border-right-style': borderRightStyle,
+    'border-bottom-style': borderBottomStyle,
+    'border-left-style': borderLeftStyle,
+    'border-top-width': borderTopWidth,
+    'border-right-width': borderRightWidth,
+    'border-bottom-width': borderBottomWidth,
+    'border-left-width': borderLeftWidth,
+    ...rest
+  } = classData;
   const borderData: Partial<Border> = {
     ch: ' ',
     top: true,
@@ -22,6 +34,9 @@ export function applyBorderStyling(classData: Record<string, string>, element: A
     right: true,
     ...(element.border ?? {}) as unknown as Border
   };
+  const borderStyle = modeArray([borderTopStyle, borderRightStyle, borderBottomStyle, borderLeftStyle]);
+  const borderWidth = modeArray([borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth]);
+
   if (borderStyle) {
     switch (borderStyle as 'bg' | 'line' | 'line-groove' | 'none') {
       case 'none':
@@ -53,7 +68,6 @@ export function applyBorderStyling(classData: Record<string, string>, element: A
       borderData.fg = borderColor;
     }
   }
-  borderData.underline = true;
   if (borderWidth) {
     if (borderWidth === '0') {
       borderData.type = 'bg';
@@ -62,6 +76,18 @@ export function applyBorderStyling(classData: Record<string, string>, element: A
       borderData.left = false;
       borderData.right = false;
     }
+  }
+  if (['none', 'hidden'].includes(borderTopStyle) || borderTopWidth === '0') {
+    borderData.top = false;
+  }
+  if (['none', 'hidden'].includes(borderRightStyle) || borderRightWidth === '0') {
+    borderData.right = false;
+  }
+  if (['none', 'hidden'].includes(borderBottomStyle) || borderBottomWidth === '0') {
+    borderData.bottom = false;
+  }
+  if (['none', 'hidden'].includes(borderLeftStyle) || borderLeftWidth === '0') {
+    borderData.left = false;
   }
   element.border = borderData as unknown as BorderBroken;
   element.style = {
@@ -74,14 +100,30 @@ export function applyBorderStyling(classData: Record<string, string>, element: A
   return rest;
 }
 
+const borderSideRegex = /^(?:border)-(top|right|bottom|left)(?:-width)?$/g;
+
 export function splitBorders(key: string, value: string): [string, string][] | null {
   if (key === 'border') {
     const parts = value.split(' ').map(part => identifyBorderPart(part));
-    return parts.map(part => (['border-' + part.type, part.value]));
+    return [
+      ...parts.filter(part => part.type === 'color').map(part => (['border-' + part.type, part.value] as [string, string])),
+      ...parts.filter(part => part.type !== 'color').flatMap(part => ['top', 'right', 'bottom', 'left'].map(side => (['border-' + side + '-' + part.type, part.value] as [string, string])))
+    ];
+  }
+  const sideBorder = borderSideRegex.exec(key);
+  if (sideBorder) {
+    const side = sideBorder[1];
+    const parts = value.split(' ').map(part => identifyBorderPart(part)).filter(part => part.type !== 'color');
+    return parts.map(part => (['border-' + side + '-' + part.type, part.value]));
   }
   if (['border-color', 'border-style', 'border-width'].includes(key)) {
     const part = identifyBorderPart(value);
-    return [['border-' + part.type, part.value]];
+    if (part.type === 'color') {
+      return [['border-color', part.value]];
+    }
+    return [
+      ...['top', 'right', 'bottom', 'left'].map(side => (['border-' + side + '-' + part.type, part.value] as [string, string]))
+    ];
   }
   return null;
 }
@@ -125,7 +167,7 @@ function identifyBorderPart(part: string): BorderPart {
       value: 'bg'
     }
   }
-  if (part.endsWith('px') || part.endsWith('rem') || part.endsWith('em')) {
+  if (part.endsWith('px') || part.endsWith('rem') || part.endsWith('em') || part === '0') {
     return {
       type: 'width',
       value: part
