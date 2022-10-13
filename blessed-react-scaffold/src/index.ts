@@ -149,7 +149,7 @@ function createGitRepo(cwd: string) {
 function addPackages(answers: Record<string, string>, cwd: string) {
     info('Adding required packages...');
     const packageManagerCall = answers['packageManager'] === 'yarn' ? 'yarn add' : 'npm i';
-    const result = exec(packageManagerCall + ' @blessed/react', {
+    const result = exec(packageManagerCall + ' blessed-react', {
         cwd,
     });
     if (result.code === 0) {

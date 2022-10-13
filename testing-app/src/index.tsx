@@ -1,4 +1,4 @@
-import BlessedReact, { useOnResize, loadStylesheet } from '@blessed/react';
+import BlessedReact, { useOnResize, loadStylesheet } from 'blessed-react';
 
 const styles = loadStylesheet('./src/styles.css');
 

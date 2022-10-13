@@ -1,6 +1,6 @@
 {
-  "name": "@blessed/react-scaffold",
-  "version": "0.1.5",
+  "name": "blessed-react-scaffold",
+  "version": "0.1.0",
   "type": "module",
   "node": ">=14.16",
   "exports": "./dist/index.js",
@@ -11,7 +11,7 @@
     "run": "yarn build && npm link && blessed-react",
     "build": "tsc"
   },
-  "description": "Easily scaffold a @blessed/react project!",
+  "description": "Easily scaffold a blessed-react project!",
   "author": "Michał Isalski",
   "license": "MIT",
   "repository": {
