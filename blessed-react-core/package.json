@@ -1,6 +1,6 @@
 {
   "name": "blessed-react",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A re-blessed wrapper providing a TSX way of defining the nodes",
   "type": "module",
   "source": "src/index.ts",
