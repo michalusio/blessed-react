@@ -2,8 +2,8 @@
   "compilerOptions": {
     "target": "${TARGET}",
     "jsx": "react",
-    "jsxFactory": "Exalted.jsx",
-    "jsxFragmentFactory": "Exalted.Fragment",
+    "jsxFactory": "BlessedReact.jsx",
+    "jsxFragmentFactory": "BlessedReact.Fragment",
     "lib": ["${TARGET}"],
     "module": "Node16",
     "moduleResolution": "Node16",

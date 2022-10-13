@@ -1,7 +1,7 @@
 {
   "name": "${projectName}",
   "version": "0.0.1",
-  "description": "New project using Exalted",
+  "description": "New project using @blessed/react",
   "main": "dist/index.js",
   "type": "module",
   "author": "<AUTHOR>",

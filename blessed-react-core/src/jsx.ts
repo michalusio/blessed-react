@@ -86,7 +86,7 @@ declare global {
     type ElementSpecialProperties<K extends keyof elements> = { key?: string | number, ref?: MutableRef<ReturnType<elements[K]>>, className?: CSSClass };
 
     // The return type of our JSX Factory
-    type Element = ExaltedNode;
+    type Element = BlessedNode;
 
     // IntrinsicElementMap grabs all the reblessed elements
     type IntrinsicElements = {
@@ -102,8 +102,8 @@ declare global {
   }
 }
 
-export type ExaltedNode = Readonly<{
+export type BlessedNode = Readonly<{
   _name: string;
-  _children: ExaltedNode[];
-  _rendered: ExaltedNode | blessedElement | ExaltedNode[];
+  _children: BlessedNode[];
+  _rendered: BlessedNode | blessedElement | BlessedNode[];
 }> | string | number | boolean;

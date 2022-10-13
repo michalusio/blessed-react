@@ -1,5 +1,5 @@
 {
-  "name": "exalted",
+  "name": "@blessed/react",
   "version": "0.1.0",
   "description": "A re-blessed wrapper providing a TSX way of defining the nodes",
   "type": "module",
@@ -14,8 +14,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/michalusio/exalted.git",
-    "directory": "exalted-core"
+    "url": "https://github.com/michalusio/blessed-react.git",
+    "directory": "blessed-react-core"
   },
   "private": false,
   "scripts": {

@@ -1,7 +1,7 @@
 {
   "name": "testing-app",
   "version": "0.0.1",
-  "description": "New project using Exalted",
+  "description": "New project using @blessed/react",
   "type": "module",
   "main": "dist/index.js",
   "author": "Michał Isalski",
@@ -16,6 +16,6 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
-    "exalted": "link:../exalted-core"
+    "@blessed/react": "link:../blessed-react-core"
   }
 }

@@ -1,23 +1,23 @@
 {
-  "name": "create-exalted-app",
+  "name": "@blessed/react-scaffold",
   "version": "0.1.5",
   "type": "module",
   "node": ">=14.16",
   "exports": "./dist/index.js",
   "bin": {
-    "create-exalted-app": "./dist/index.js"
+    "blessed-react": "./dist/index.js"
   },
   "scripts": {
-    "run": "yarn build && npm link && create-exalted-app",
+    "run": "yarn build && npm link && blessed-react",
     "build": "tsc"
   },
-  "description": "Easily scaffold an exalted project!",
+  "description": "Easily scaffold a @blessed/react project!",
   "author": "Michał Isalski",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/michalusio/exalted.git",
-    "directory": "create-exalted-app"
+    "url": "https://github.com/michalusio/blessed-react.git",
+    "directory": "blessed-react-scaffold"
   },
   "private": false,
   "dependencies": {

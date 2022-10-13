@@ -10,7 +10,7 @@ import { readdirSync, writeFileSync, readFileSync, copyFileSync, existsSync, mkd
 const cwd = process.cwd();
 const root = resolve(process.argv[1], '../../');
 const dataPath = resolve(root, './data');
-const prefix = chalk.cyan.bold('[create-exalted-app] ');
+const prefix = chalk.cyan.bold('[blessed-react] ');
 
 const warn = (str: string) => console.warn(prefix + chalk.yellow(str));
 const info = (str: string) => console.log(prefix + chalk.blue(str));
@@ -149,7 +149,7 @@ function createGitRepo(cwd: string) {
 function addPackages(answers: Record<string, string>, cwd: string) {
     info('Adding required packages...');
     const packageManagerCall = answers['packageManager'] === 'yarn' ? 'yarn add' : 'npm i';
-    const result = exec(packageManagerCall + ' exalted', {
+    const result = exec(packageManagerCall + ' @blessed/react', {
         cwd,
     });
     if (result.code === 0) {

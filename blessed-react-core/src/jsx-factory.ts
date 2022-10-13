@@ -1,7 +1,7 @@
 import { blessedElement } from "./blessing";
 import { applyClass } from "./css";
 import { hookState } from "./hooks/hook-base";
-import { blessedElements, ExaltedNode } from "./jsx";
+import { blessedElements, BlessedNode } from "./jsx";
 import { getKey } from "./key";
 import { Constructor, flatten, isElement, ItemOrArray } from "./utils";
 
@@ -19,8 +19,8 @@ type GetAttributesFor<T extends JSXItem> =
 export default function jsx(
   tag: JSXItem,
   attributes: GetAttributesFor<typeof tag> | undefined,
-  ...children: ItemOrArray<ExaltedNode>[]
-): ExaltedNode {
+  ...children: ItemOrArray<BlessedNode>[]
+): BlessedNode {
   const flatChildren = flatten(children);
   if (tag === 'Fragment') {
     return {
@@ -83,7 +83,7 @@ function splitAttributes<T extends keyof JSX.IntrinsicElements>(attributes: GetA
   return [normal as Exclude<JSX.IntrinsicElements[T], JSX.ElementEventProperties<T>>, handlers as JSX.ElementEventProperties<T>];
 }
 
-function appendChild(element: blessedElement, child: ExaltedNode) {
+function appendChild(element: blessedElement, child: BlessedNode) {
   if (typeof child === "string") {
     element.content += child;
     return;

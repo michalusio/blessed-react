@@ -1,7 +1,7 @@
 import Reblessed, { Screen } from "./blessing";
 import { cursorTo } from 'node:readline';
 import { hookState } from "./hooks/hook-base";
-import { ExaltedNode } from "./jsx";
+import { BlessedNode } from "./jsx";
 import { isElement } from "./utils";
 
 type BootstrapOptions = Readonly<{
@@ -12,11 +12,11 @@ type BootstrapOptions = Readonly<{
   autoRefresh?: number
 }>;
 
-let rootComponent: (() => ExaltedNode) | undefined;
+let rootComponent: (() => BlessedNode) | undefined;
 /** @internal */
 export let screenObject: Screen | undefined;
 
-export function Bootstrap(component: () => ExaltedNode, options?: BootstrapOptions): void {
+export function Bootstrap(component: () => BlessedNode, options?: BootstrapOptions): void {
   options ??= {};
   if (rootComponent || screenObject) throw new Error('Cannot call `Bootstrap` more than once!');
   rootComponent = component;
@@ -57,15 +57,15 @@ function rerender() {
   hookState.value = 0;
 }
 
-function addIntoScreen(exaltedNode: ExaltedNode) {
+function addIntoScreen(blessedNode: BlessedNode) {
   if (!screenObject) return;
-  if (typeof exaltedNode === 'number' || typeof exaltedNode === 'string' || typeof exaltedNode === 'boolean') {
-    screenObject.append(Reblessed.box({ width: '100%', height: '100%', content: exaltedNode + '' }));
-  } else if (isElement(exaltedNode._rendered)) {
-    screenObject.append(exaltedNode._rendered);
-  } else if (Array.isArray(exaltedNode._rendered)) {
-    exaltedNode._rendered.forEach(node => addIntoScreen(node));
+  if (typeof blessedNode === 'number' || typeof blessedNode === 'string' || typeof blessedNode === 'boolean') {
+    screenObject.append(Reblessed.box({ width: '100%', height: '100%', content: blessedNode + '' }));
+  } else if (isElement(blessedNode._rendered)) {
+    screenObject.append(blessedNode._rendered);
+  } else if (Array.isArray(blessedNode._rendered)) {
+    blessedNode._rendered.forEach(node => addIntoScreen(node));
   } else {
-    addIntoScreen(exaltedNode._rendered);
+    addIntoScreen(blessedNode._rendered);
   }
 }

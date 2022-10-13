@@ -2,8 +2,8 @@
   "compilerOptions": {
     "target": "ES2022",
     "jsx": "react",
-    "jsxFactory": "Exalted.jsx",
-    "jsxFragmentFactory": "Exalted.Fragment",
+    "jsxFactory": "BlessedReact.jsx",
+    "jsxFragmentFactory": "BlessedReact.Fragment",
     "lib": ["ES2022"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",

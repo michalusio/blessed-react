@@ -1,13 +1,13 @@
-import Exalted, { useOnResize, loadStylesheet } from 'exalted';
+import BlessedReact, { useOnResize, loadStylesheet } from '@blessed/react';
 
 const styles = loadStylesheet('./src/styles.css');
 
 const App = () => {
-  useOnResize(Exalted.forceRerender);
+  useOnResize(BlessedReact.forceRerender);
   
   return <box className={styles.lol} onRender={()=>console.log}>
     Hello, testing-app!
   </box>;
 }
 
-Exalted.Bootstrap(App);
+BlessedReact.Bootstrap(App);
