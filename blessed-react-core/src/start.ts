@@ -40,6 +40,7 @@ export function forceRerender() {
 
 function rerender() {
   if (!rootComponent || !screenObject) return;
+  screenObject.children.forEach(ch => ch.destroy());
   screenObject.children = [];
   try {
     addIntoScreen(rootComponent());
