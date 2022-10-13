@@ -11,7 +11,7 @@ export const transformPropertyName: Record<string, string> = {
   'color': 'fg',
   'background-color': 'bg',
   'text-align': 'align',
-  'vertical-align': 'valign'
+  'vertical-align': 'valign',
 }
 
 export function transformPropertyValue(value: string): string {

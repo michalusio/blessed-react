@@ -4,6 +4,7 @@ import { blessedElementsTypes } from '../jsx';
 import { applyBorderStyling } from './border';
 import { applyPaddingStyling } from './padding';
 import { splitProperty, transformPropertyName, transformPropertyValue } from './transforms';
+import { applyVisibility } from './visibility';
 
 const classIdentifierRegex = /^\.-?(?:[_a-zA-Z]|[\u00A0-\uFFFF])+(?:[_a-zA-Z0-9-]|[\u00A0-\uFFFF])*$/i;
 
@@ -39,6 +40,7 @@ export function applyClass(element: AnyElement, classData?: CSSClass): void {
       delete classDataCopy[key];
     }
   });
+  classDataCopy = applyVisibility(classDataCopy, element);
   classDataCopy = applyBorderStyling(classDataCopy, element);
   classDataCopy = applyPaddingStyling(classDataCopy, element);
   element.style = {

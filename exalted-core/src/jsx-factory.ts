@@ -39,19 +39,25 @@ export default function jsx(
       _rendered: rendered
     };
   }
-  const element = blessedElements[tag](attributes as any);
+
+  const [actualAttributes, eventHandlers] = attributes ? splitAttributes(attributes) : [{}, {}];
+
+  const element = blessedElements[tag](actualAttributes as any);
+
+  // attach event handlers
+  Object.entries(eventHandlers).forEach(([type, handler]) => {
+    element.on(type, handler);
+  });
 
   // set special attributes
-  if (attributes) {
-    if (attributes.ref) {
-      attributes.ref.current = element;
-    }
-    applyClass(element, attributes.className);
+  if (actualAttributes.ref) {
+    actualAttributes.ref.current = element;
   }
+  applyClass(element, actualAttributes.className);
 
 
   // append children
-  if (!('content' in (attributes ?? {}))) {
+  if (!('content' in actualAttributes)) {
     element.content = '';
   }
   flatChildren.forEach(child => appendChild(element, child));
@@ -63,6 +69,19 @@ export default function jsx(
 }
 
 export const Fragment: 'Fragment' = 'Fragment';
+
+function splitAttributes<T extends keyof JSX.IntrinsicElements>(attributes: GetAttributesFor<T>): [Exclude<JSX.IntrinsicElements[T], JSX.ElementEventProperties<T>>, JSX.ElementEventProperties<T>] {
+  const handlers: Record<string, unknown> = {};
+  const normal: Record<string, unknown> = {};
+  Object.entries(attributes).forEach(([key, value]) => {
+    if (key.length > 2 && key.startsWith('on') && key[2] === key[2].toUpperCase()) {
+      handlers[key.substring(2).toLowerCase()] = value;
+    } else {
+      normal[key] = value;
+    }
+  });
+  return [normal as Exclude<JSX.IntrinsicElements[T], JSX.ElementEventProperties<T>>, handlers as JSX.ElementEventProperties<T>];
+}
 
 function appendChild(element: blessedElement, child: ExaltedNode) {
   if (typeof child === "string") {
