@@ -1,5 +1,4 @@
 import Reblessed, { Screen } from "./blessing";
-import { cursorTo } from 'node:readline';
 import { hookState } from "./hooks/hook-base";
 import { BlessedNode } from "./jsx";
 import { isElement } from "./utils";
@@ -9,7 +8,7 @@ type BootstrapOptions = Readonly<{
    * Automatically re-render the screen every X milliseconds.
    * Useful for terminals where the resize event does not work.
    */
-  autoRefresh?: number
+  autoRefresh?: number;
 }>;
 
 let rootComponent: (() => BlessedNode) | undefined;
@@ -40,27 +39,24 @@ export function forceRerender() {
 
 function rerender() {
   if (!rootComponent || !screenObject) return;
-  screenObject.children.forEach(ch => ch.destroy());
-  screenObject.children = [];
+  [...screenObject.children].forEach(ch => {
+    screenObject!.remove(ch);
+    ch.destroy();
+  });
   try {
     addIntoScreen(rootComponent());
     screenObject.render();
   } catch (err) {
     screenObject.destroy();
-    cursorTo(process.stdout, 0, 0, () => {
-      let message = '';
-      if (err instanceof Error) {
-        message = err.message + '\n' + (err.stack ?? '');
-      } else message = JSON.stringify(err);
-      console.error('\033[91;40m'+message+'\033[37;40m');
-    });
+    throw err;
   }
   hookState.value = 0;
 }
 
 function addIntoScreen(blessedNode: BlessedNode) {
   if (!screenObject) return;
-  if (typeof blessedNode === 'number' || typeof blessedNode === 'string' || typeof blessedNode === 'boolean') {
+  if (typeof blessedNode === 'boolean' || blessedNode == null) return;
+  if (typeof blessedNode === 'number' || typeof blessedNode === 'string') {
     screenObject.append(Reblessed.box({ width: '100%', height: '100%', content: blessedNode + '' }));
   } else if (isElement(blessedNode._rendered)) {
     screenObject.append(blessedNode._rendered);

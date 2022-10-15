@@ -1,6 +1,6 @@
 {
   "name": "blessed-react",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A re-blessed wrapper providing a TSX way of defining the nodes",
   "type": "module",
   "source": "src/index.ts",
@@ -24,6 +24,7 @@
   "dependencies": {
     "@adobe/css-tools": "^4.0.1",
     "@types/blessed": "^0.1.19",
+    "chokidar": "^3.5.3",
     "reblessed": "^0.1.84"
   },
   "devDependencies": {

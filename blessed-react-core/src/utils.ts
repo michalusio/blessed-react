@@ -1,4 +1,5 @@
 import Reblessed, {blessedElement} from './blessing';
+import type { blessedElementsTypes } from './jsx';
 
 export type Brand<T, V> = T & { __type: V };
 
@@ -7,6 +8,8 @@ export type ItemOrArray<T> = T | T[];
 export type Constructor<T> = (...args: unknown[]) => T;
 
 const Element = (Reblessed.widget as any).Element as Constructor<blessedElement>;
+
+export type AnyElement = blessedElementsTypes[keyof blessedElementsTypes];
 
 /** @internal */
 export function isElement(obj: any): obj is blessedElement {

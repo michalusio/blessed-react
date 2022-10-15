@@ -1,4 +1,4 @@
-import { AnyElement } from ".";
+import { AnyElement } from "../utils";
 
 const paddingSideRegex = /^(?:padding)(?:-(top|right|bottom|left))?$/g;
 

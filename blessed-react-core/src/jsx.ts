@@ -106,4 +106,4 @@ export type BlessedNode = Readonly<{
   _name: string;
   _children: BlessedNode[];
   _rendered: BlessedNode | blessedElement | BlessedNode[];
-}> | string | number | boolean;
+}> | string | number | boolean | undefined | null;

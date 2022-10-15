@@ -1,15 +1,12 @@
-.lol {
+.myStyle {
   color: #00aaaa;
   background-color: #700;
   width: 50%;
-  height: 50%;
-  text-align: right;
-  vertical-align: top;
-  border: 1px solid white;
+  height: 100%;
+  vertical-align: middle;
+  border: 1px solid yellow;
   border-left: 0;
   border-top-width: 0;
-  padding-top: 3px;
-  padding-right: 8px;
-  left: 10px;
+  padding-left: 20px;
   visibility: visible;
 }

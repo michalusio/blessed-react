@@ -92,10 +92,7 @@ function appendChild(element: blessedElement, child: BlessedNode) {
     element.content += child;
     return;
   }
-  if (typeof child === 'boolean') {
-    if (child) {
-      element.content += child;
-    }
+  if (typeof child === 'boolean' || child == null) {
     return;
   }
   if (!child._rendered) { return; }

@@ -1,6 +1,5 @@
 import { Border as BorderBroken } from '../blessing';
-import { AnyElement } from ".";
-import { modeArray } from '../utils';
+import { AnyElement, modeArray } from '../utils';
 
 type Border = Omit<BorderBroken, 'bold' | 'underline' | 'fg' | 'bg' > & {
   left?: boolean,

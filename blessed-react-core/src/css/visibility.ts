@@ -1,4 +1,4 @@
-import { AnyElement } from ".";
+import { AnyElement } from "../utils";
 
 export function applyVisibility(classData: Record<string, string>, element: AnyElement): Record<string, string> {
   const { visibility, ...rest } = classData;

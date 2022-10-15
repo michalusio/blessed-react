@@ -47,9 +47,18 @@ Legend:
   - :heavy_check_mark: useOnKey
   - :heavy_check_mark: useOnResize
 
+- :heavy_check_mark: Development Mode
+  - :heavy_check_mark: CSS watch and refresh-on-change
+  - :x: Diagnostics
+  - :x: Helpful Stacktrace
+  - :x: Strict Mode
+
 ### Example usage:
 
     import BlessedReact, { useOnResize, loadStylesheet, useState } from 'blessed-react';
+
+    // Enable dev mode to auto-update CSS on any changes
+    BlessedReact.EnableDevelopmentMode();
 
     const styles = loadStylesheet('./src/styles.css');
 
