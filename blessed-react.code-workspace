@@ -1,13 +1,20 @@
 {
 	"folders": [
 		{
+			"name": "scaffold",
 			"path": "blessed-react-scaffold"
 		},
 		{
+			"name": "core",
 			"path": "blessed-react-core"
 		},
 		{
+			"name": "testing",
 			"path": "testing-app"
+		},
+		{
+			"name": "root",
+			"path": "."
 		}
 	],
 	"settings": {
@@ -16,6 +23,10 @@
 		"npm.autoDetect": "on",
 		"npm.enableRunFromFolder": true,
 		"npm.scriptExplorerAction": "run",
-		"npm.exclude": ["**/blessed-react-scaffold", "**/blessed-react-scaffold/**"]
+		"npm.exclude": [
+			"**/blessed-react-scaffold",
+			"**/blessed-react-scaffold/**"
+		],
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	}
 }
