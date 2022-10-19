@@ -5,3 +5,4 @@ export { useOnKey } from './useOnKey';
 export { useOnResize } from './useOnResize';
 export { useMemo } from './useMemo';
 export { useCallback } from './useCallback';
+export { useContext } from './useContext';

@@ -12,7 +12,7 @@ type BootstrapOptions = Readonly<{
 }>;
 
 let rootComponent: (() => BlessedNode) | undefined;
-/** @internal */
+
 export let screenObject: Screen | undefined;
 
 export function Bootstrap(component: () => BlessedNode, options?: BootstrapOptions): void {
@@ -56,6 +56,10 @@ function rerender() {
 function addIntoScreen(blessedNode: BlessedNode) {
   if (!screenObject) return;
   if (typeof blessedNode === 'boolean' || blessedNode == null) return;
+  if (typeof blessedNode === 'function') {
+    addIntoScreen(blessedNode(''));
+    return;
+  }
   if (typeof blessedNode === 'number' || typeof blessedNode === 'string') {
     screenObject.append(Reblessed.box({ width: '100%', height: '100%', content: blessedNode + '' }));
   } else if (isElement(blessedNode._rendered)) {

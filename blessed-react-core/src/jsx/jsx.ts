@@ -1,7 +1,7 @@
-import Reblessed, { blessedElement, IMouseEventArg, Screen } from "./blessing";
-import { ItemOrArray } from "./utils";
-import type { MutableRef } from "./hooks/useRef";
-import { CSSClass } from "./css";
+import Reblessed, { blessedElement, IMouseEventArg, Screen } from "../blessing";
+import { ItemOrArray } from "../utils";
+import type { MutableRef } from "../hooks/useRef";
+import { CSSClass } from "../css";
 
 export const blessedElements = {
   "bigtext": Reblessed.bigtext,
@@ -93,7 +93,9 @@ declare global {
       [K in keyof elements]: Parameters<elements[K]>[0] & ElementSpecialProperties<K> & ElementEventProperties<K>;
     }
 
-    interface Component {
+    type Tag = keyof IntrinsicElements;
+
+    type Component = {
       (
         properties?: { [key: string]: any },
         children?: ItemOrArray<Element>[]
@@ -102,8 +104,16 @@ declare global {
   }
 }
 
+export interface ExoticComponent<Type extends symbol, P extends { children?: any } = {}> {
+  /**
+   * **NOTE**: Exotic components are not callable.
+   */
+  (props: Omit<P, 'children'>, children: P['children']): (BlessedNode | null);
+  readonly $$type: Type;
+}
+
 export type BlessedNode = Readonly<{
   _name: string;
   _children: BlessedNode[];
-  _rendered: BlessedNode | blessedElement | BlessedNode[];
-}> | string | number | boolean | undefined | null;
+  _rendered: BlessedNode | BlessedNode[] | blessedElement;
+}> | string | number | boolean | undefined | null | ((...args: unknown[]) => BlessedNode);

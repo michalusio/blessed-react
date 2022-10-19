@@ -1,15 +1,24 @@
-import BlessedReact, { useOnResize, loadStylesheet } from 'blessed-react';
+import BlessedReact, { loadStylesheet, useContext } from 'blessed-react';
 
 BlessedReact.EnableDevelopmentMode();
 
 const styles = loadStylesheet('./src/styles.css');
 
+const MyContext = BlessedReact.createContext("yellow");
+
 const App = () => {
-  useOnResize(BlessedReact.forceRerender);
   return <box className={styles.myStyle}>
-    Hello, testing-app!{'\n'}
-    {styles.myStyle['border-color']}
+    <MyContext.Provider value="red">
+      <B/>
+    </MyContext.Provider>
+    <MyContext.Provider value="blue">
+      <B/>
+    </MyContext.Provider>
+    <B/>
   </box>;
+}
+const B = () => {
+  return <MyContext.Consumer>{(value: string) => <box>{value}</box>}</MyContext.Consumer>;
 }
 
 BlessedReact.Bootstrap(App);

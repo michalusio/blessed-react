@@ -1,5 +1,4 @@
-/** @internal */
-export function getKey(tag: JSX.Component, attributes: Record<string, unknown> | undefined): string {
+export function getKey(tag: JSX.Component, attributes: Record<string, unknown> | null | undefined): string {
   const tagName = tag.name;
   if (!attributes) {
     return tagName;

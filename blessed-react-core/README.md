@@ -49,7 +49,7 @@ Legend:
   - :heavy_check_mark: useOnResize
   - :o: useTransition
   - :o: useDeferredValue
-  - :o: useContext
+  - :hammer: useContext
   - :o: useReducer
   - :o: useId
 
@@ -60,10 +60,10 @@ Legend:
   - :o: Strict Mode
 
 - :o: Additional features
-  - :o: \<Suspense\> component
-  - :o: ErrorBoundary component
+  - :hammer: \<Suspense\> component
+  - :hammer: ErrorBoundary component
   - :o: Portals
-  - :o: Contexts
+  - :hammer: Contexts
 
 ## Example usage:
 

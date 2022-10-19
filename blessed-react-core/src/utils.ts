@@ -11,17 +11,14 @@ const Element = (Reblessed.widget as any).Element as Constructor<blessedElement>
 
 export type AnyElement = blessedElementsTypes[keyof blessedElementsTypes];
 
-/** @internal */
 export function isElement(obj: any): obj is blessedElement {
   return obj instanceof Element;
 }
 
-/** @internal */
 export function flatten<T>(items: ItemOrArray<T>[]): T[] {
   return items.flatMap(i => Array.isArray(i) ? i : [i]);
 }
 
-/** @internal */
 export function modeArray<T>(array: T[]): T | undefined {
   if (array.length == 0) return undefined;
   const modeMap = new Map<T, number>();
@@ -41,4 +38,8 @@ export function modeArray<T>(array: T[]): T | undefined {
     }
   });
   return modes[0];
+}
+
+export function Symbolize<T extends {}, S extends symbol>(data: T, symbol: S): T & { readonly $$type: typeof symbol} {
+  return Object.assign(data, {$$type: symbol});
 }
