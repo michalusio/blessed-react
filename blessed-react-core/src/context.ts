@@ -25,14 +25,17 @@ export type Context<T> = {
 export function createContext<T>(defaultValue: T): Context<T> {
   const valueStack = [defaultValue];
   const context: Context<T> = {
-    Consumer: Symbolize((_props: {}, children: (value: T) => BlessedNode) => children(valueStack[valueStack.length - 1]), ConsumerSymbol),
-    Provider: Symbolize((props: ProviderProps<T>) => {
-      useEffect(() => {
+    Consumer: Symbolize((_props: {}, children: (value: T) => BlessedNode) => {
+      return children(valueStack[valueStack.length - 1]);
+    }, ConsumerSymbol),
+    Provider: Symbolize((props: {value: T}, children: BlessedNode) => {
+      return () => {
+        if (typeof children !== 'function') return children;
         valueStack.push(props.value);
-        return () => valueStack.pop();
-      }, []);
-      const childNode = props.children;
-      return typeof childNode === 'function' ? childNode('') : childNode;
+        const child = children();
+        valueStack.pop();
+        return child;
+      }
     }, ProviderSymbol)
   }
   return context;

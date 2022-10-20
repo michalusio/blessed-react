@@ -1,12 +1,6 @@
-.myStyle {
-  color: #00aaaa;
-  background-color: #700;
-  width: 50%;
-  height: 100%;
+.boxStyle {
+  width: 20px;
+  height: 7px;
+  text-align: center;
   vertical-align: middle;
-  border: 1px solid yellow;
-  border-left: 0;
-  border-top-width: 0;
-  padding-left: 20px;
-  visibility: visible;
 }

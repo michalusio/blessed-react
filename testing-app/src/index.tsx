@@ -1,24 +1,35 @@
-import BlessedReact, { loadStylesheet, useContext } from 'blessed-react';
+import BlessedReact, { loadStylesheet } from "blessed-react";
 
 BlessedReact.EnableDevelopmentMode();
 
-const styles = loadStylesheet('./src/styles.css');
+const styles = loadStylesheet("./src/styles.css");
 
-const MyContext = BlessedReact.createContext("yellow");
+const ColorContext = BlessedReact.createContext("red");
 
 const App = () => {
-  return <box className={styles.myStyle}>
-    <MyContext.Provider value="red">
-      <B/>
-    </MyContext.Provider>
-    <MyContext.Provider value="blue">
-      <B/>
-    </MyContext.Provider>
-    <B/>
-  </box>;
-}
-const B = () => {
-  return <MyContext.Consumer>{(value: string) => <box>{value}</box>}</MyContext.Consumer>;
-}
+  return (
+    <box top={0} width={"100%"} height={"100%"}>
+      <B top={1} />
+      <ColorContext.Provider value="green">
+        <B top={8} />
+      </ColorContext.Provider>
+      <ColorContext.Provider value="blue">
+        <B top={15} />
+      </ColorContext.Provider>
+    </box>
+  );
+};
+const B = ({ top }: { top: number }) => {
+  return (
+    <ColorContext.Consumer>
+      {(color: string) => (
+        <box className={styles.boxStyle} top={top} bg={color}>
+          {color}
+        </box>
+      )}
+    </ColorContext.Consumer>
+  );
+};
 
 BlessedReact.Bootstrap(App);
+
