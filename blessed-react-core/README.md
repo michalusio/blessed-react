@@ -49,13 +49,13 @@ Legend:
   - :heavy_check_mark: useOnResize
   - :o: useTransition
   - :o: useDeferredValue
-  - :hammer: useContext
+  - :heavy_check_mark: useContext
   - :o: useReducer
   - :o: useId
 
 - :heavy_check_mark: Development Mode
   - :heavy_check_mark: CSS watch and refresh-on-change
-  - :o: Diagnostics
+  - :hammer: Diagnostics
   - :o: Helpful Stacktrace
   - :o: Strict Mode
 
@@ -63,7 +63,7 @@ Legend:
   - :hammer: \<Suspense\> component
   - :hammer: ErrorBoundary component
   - :o: Portals
-  - :hammer: Contexts
+  - :heavy_check_mark: Contexts
 
 ## Example usage:
 
