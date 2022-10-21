@@ -1,27 +1,28 @@
 {
   "compilerOptions": {
-    "target": "ES2021",                               /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-    "jsx": "react",                                   /* Specify what JSX code is generated. */
+    "target": "ES2021",
+    "jsx": "react",
     "jsxFactory": "BlessedReact.jsx",
     "jsxFragmentFactory": "BlessedReact.Fragment",
     "lib": ["ES2021"],
-    "module": "ES2022",                                  /* Specify what module code is generated. */
+    "module": "ES2022",
     "moduleResolution": "Node",
     "isolatedModules": true,
     "stripInternal": true,
-    "declaration": true,                              /* Generate .d.ts files from TypeScript and JavaScript files in your project. */
-    "outDir": "./dist",                               /* Specify an output folder for all emitted files. */
-    "removeComments": true,                           /* Disable emitting comments. */
-    "importHelpers": true,                            /* Allow importing helper functions from tslib once per project, instead of including them per-file. */
-    "importsNotUsedAsValues": "remove",               /* Specify emit/checking behavior for imports that are only used for types */
-    "noEmitOnError": true,                            /* Disable emitting files if any type checking errors are reported. */
-    "esModuleInterop": true,                          /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */
-    "forceConsistentCasingInFileNames": true,         /* Ensure that casing is correct in imports. */
-    "strict": true,                                   /* Enable all strict type-checking options. */
-    "noImplicitAny": true,                            /* Enable error reporting for expressions and declarations with an implied `any` type.. */
-    "noImplicitThis": true,                           /* Enable error reporting when `this` is given the type `any`. */
-    "useUnknownInCatchVariables": true,               /* Type catch clause variables as 'unknown' instead of 'any'. */
-    "alwaysStrict": true,                             /* Ensure 'use strict' is always emitted. */
-    "skipLibCheck": true                              /* Skip type checking all .d.ts files. */
-  }
+    "declaration": true,
+    "outDir": "./dist",
+    "removeComments": true,
+    "importHelpers": true,
+    "importsNotUsedAsValues": "remove",
+    "noEmitOnError": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "useUnknownInCatchVariables": true,
+    "alwaysStrict": true,
+    "skipLibCheck": true
+  },
+  "include": ["./src/**/*.ts"]
 }

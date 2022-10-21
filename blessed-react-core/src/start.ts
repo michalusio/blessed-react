@@ -15,16 +15,20 @@ let rootComponent: (() => BlessedNode) | undefined;
 
 export let screenObject: Screen | undefined;
 
-export function Bootstrap(component: () => BlessedNode, options?: BootstrapOptions): void {
+export function Bootstrap(
+  component: () => BlessedNode,
+  options?: BootstrapOptions
+): void {
   options ??= {};
-  if (rootComponent || screenObject) throw new Error('Cannot call `Bootstrap` more than once!');
+  if (rootComponent || screenObject)
+    throw new Error("Cannot call `Bootstrap` more than once!");
   rootComponent = component;
   screenObject = Reblessed.screen({
     smartCSR: true,
     autoPadding: true,
     dockBorders: true,
     title: component.name,
-    useBCE: true
+    useBCE: true,
   });
   if (options.autoRefresh) {
     setInterval(forceRerender, options.autoRefresh);
@@ -32,14 +36,18 @@ export function Bootstrap(component: () => BlessedNode, options?: BootstrapOptio
   rerender();
 }
 
+let lastTimeoutId: NodeJS.Timeout | undefined;
+
 export function forceRerender() {
-  if (!rootComponent || !screenObject) throw new Error('Call `Bootstrap` first before rerendering!');
-  setTimeout(rerender);
+  if (!rootComponent || !screenObject)
+    throw new Error("Call `Bootstrap` first before rerendering!");
+  clearTimeout(lastTimeoutId);
+  lastTimeoutId = setTimeout(rerender);
 }
 
 function rerender() {
   if (!rootComponent || !screenObject) return;
-  [...screenObject.children].forEach(ch => {
+  [...screenObject.children].forEach((ch) => {
     screenObject!.remove(ch);
     ch.destroy();
   });
@@ -55,17 +63,23 @@ function rerender() {
 
 function addIntoScreen(blessedNode: BlessedNode) {
   if (!screenObject) return;
-  if (typeof blessedNode === 'boolean' || blessedNode == null) return;
-  if (typeof blessedNode === 'function') {
-    addIntoScreen(blessedNode(''));
+  if (typeof blessedNode === "boolean" || blessedNode == null) return;
+  if (typeof blessedNode === "function") {
+    addIntoScreen(blessedNode(""));
     return;
   }
-  if (typeof blessedNode === 'number' || typeof blessedNode === 'string') {
-    screenObject.append(Reblessed.box({ width: '100%', height: '100%', content: blessedNode + '' }));
+  if (typeof blessedNode === "number" || typeof blessedNode === "string") {
+    screenObject.append(
+      Reblessed.box({
+        width: "100%",
+        height: "100%",
+        content: blessedNode + "",
+      })
+    );
   } else if (isElement(blessedNode._rendered)) {
     screenObject.append(blessedNode._rendered);
   } else if (Array.isArray(blessedNode._rendered)) {
-    blessedNode._rendered.forEach(node => addIntoScreen(node));
+    blessedNode._rendered.forEach((node) => addIntoScreen(node));
   } else {
     addIntoScreen(blessedNode._rendered);
   }

@@ -1,4 +1,4 @@
-import { Context } from "../context";
+import { Context } from "../jsx/context";
 
 export function useContext<T>(context: Context<T>): T {
   let current: T;

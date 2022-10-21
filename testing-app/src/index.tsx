@@ -1,35 +1,23 @@
-import BlessedReact, { loadStylesheet } from "blessed-react";
+import BlessedReact, { Suspense } from "blessed-react";
 
 BlessedReact.EnableDevelopmentMode();
 
-const styles = loadStylesheet("./src/styles.css");
-
-const ColorContext = BlessedReact.createContext("red");
+const B = BlessedReact.lazy(() => import("./b.js"));
 
 const App = () => {
   return (
     <box top={0} width={"100%"} height={"100%"}>
-      <B top={1} />
-      <ColorContext.Provider value="green">
-        <B top={8} />
-      </ColorContext.Provider>
-      <ColorContext.Provider value="blue">
-        <B top={15} />
-      </ColorContext.Provider>
+      <Suspense fallback={"loading red"}>
+        <B top={1} color="red" />
+      </Suspense>
+      <Suspense fallback={"loading green"}>
+        <B top={8} color="green" />
+      </Suspense>
+      <Suspense fallback={"loading blue"}>
+        <B top={15} color="blue" />
+      </Suspense>
     </box>
-  );
-};
-const B = ({ top }: { top: number }) => {
-  return (
-    <ColorContext.Consumer>
-      {(color: string) => (
-        <box className={styles.boxStyle} top={top} bg={color}>
-          {color}
-        </box>
-      )}
-    </ColorContext.Consumer>
   );
 };
 
 BlessedReact.Bootstrap(App);
-

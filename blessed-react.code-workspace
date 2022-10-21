@@ -27,6 +27,7 @@
 			"**/blessed-react-scaffold",
 			"**/blessed-react-scaffold/**"
 		],
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true
 	}
 }

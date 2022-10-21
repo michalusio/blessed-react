@@ -2,12 +2,21 @@
   "name": "blessed-react",
   "version": "0.1.6",
   "description": "A re-blessed wrapper providing a TSX way of defining the nodes",
-  "keywords": [ "typescript", "react", "css", "ui", "tui", "console", "blessed", "reblessed" ],
+  "keywords": [
+    "typescript",
+    "react",
+    "css",
+    "ui",
+    "tui",
+    "console",
+    "blessed",
+    "reblessed"
+  ],
   "type": "module",
   "source": "src/index.ts",
   "module": "./dist/index.js",
   "exports": "./dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "./dist/index.d.ts",
   "author": "Michał Isalski",
   "license": "MIT",
   "engines": {

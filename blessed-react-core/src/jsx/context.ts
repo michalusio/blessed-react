@@ -1,10 +1,11 @@
-import { useEffect } from "./hooks";
 import { BlessedNode, ExoticComponent } from "./jsx";
-import { Symbolize } from "./utils";
+import { ItemOrArray, Symbolize } from "../utils";
+import { jsx } from "./jsx-factory";
+import { Fragment } from "./fragment";
 
 interface ProviderProps<T> {
   value: T;
-  children?: BlessedNode | undefined;
+  children: ItemOrArray<BlessedNode>;
 }
 
 interface ConsumerProps<T> {
@@ -28,11 +29,10 @@ export function createContext<T>(defaultValue: T): Context<T> {
     Consumer: Symbolize((_props: {}, children: (value: T) => BlessedNode) => {
       return children(valueStack[valueStack.length - 1]);
     }, ConsumerSymbol),
-    Provider: Symbolize((props: {value: T}, children: BlessedNode) => {
+    Provider: Symbolize((props: {value: T}, children: ItemOrArray<BlessedNode>) => {
       return () => {
-        if (typeof children !== 'function') return children;
         valueStack.push(props.value);
-        const child = children();
+        const child = typeof children !== 'function' ? jsx(Fragment, undefined, children) : children();
         valueStack.pop();
         return child;
       }
