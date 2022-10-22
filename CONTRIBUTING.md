@@ -14,7 +14,7 @@ The project can be contributed to in this way:
 
 ---
 
-![Fork button in the upper-right corner](./fork.PNG)
+![Fork button in the upper-right corner](./.github/fork.PNG)
 
 ---
 
