@@ -1,6 +1,7 @@
 import Reblessed, { Screen } from "./blessing";
 import { hookState } from "./hooks/hook-base";
 import { BlessedNode } from "./jsx";
+import { RenderError } from "./render-error";
 import { isElement } from "./utils";
 
 type BootstrapOptions = Readonly<{
@@ -46,19 +47,25 @@ export function forceRerender() {
 }
 
 function rerender() {
-  if (!rootComponent || !screenObject) return;
-  [...screenObject.children].forEach((ch) => {
-    screenObject!.remove(ch);
-    ch.destroy();
-  });
   try {
-    addIntoScreen(rootComponent());
-    screenObject.render();
+    if (!rootComponent || !screenObject) return;
+    [...screenObject.children].forEach((ch) => {
+      screenObject!.remove(ch);
+      ch.destroy();
+    });
+    try {
+      addIntoScreen(rootComponent());
+      screenObject.render();
+    } catch (err) {
+      screenObject.destroy();
+      throw new RenderError(err, rootComponent.name);
+    }
+    hookState.value = 0;
   } catch (err) {
-    screenObject.destroy();
-    throw err;
+    if (err instanceof RenderError) {
+      throw err.toString();
+    } else throw err;
   }
-  hookState.value = 0;
 }
 
 function addIntoScreen(blessedNode: BlessedNode) {

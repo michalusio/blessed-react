@@ -1,21 +1,22 @@
-import BlessedReact, { Suspense } from "blessed-react";
+import BlessedReact, { loadStylesheet } from "blessed-react";
 
 BlessedReact.EnableDevelopmentMode();
 
-const B = BlessedReact.lazy(() => import("./b.js"));
+const styles = loadStylesheet("./src/styles.css");
 
 const App = () => {
   return (
     <box top={0} width={"100%"} height={"100%"}>
-      <Suspense fallback={"loading red"}>
-        <B top={1} color="red" />
-      </Suspense>
-      <Suspense fallback={"loading green"}>
-        <B top={8} color="green" />
-      </Suspense>
-      <Suspense fallback={"loading blue"}>
-        <B top={15} color="blue" />
-      </Suspense>
+      <B top={1} color="red" />
+    </box>
+  );
+};
+
+const B = ({ top, color }: { top: number; color: string }) => {
+  throw new Error("something went wrong");
+  return (
+    <box className={styles.boxStyle} top={top} bg={color}>
+      {color}
     </box>
   );
 };

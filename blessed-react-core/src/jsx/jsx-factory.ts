@@ -6,6 +6,7 @@ import { getKey } from "../key";
 import { flatten, isElement, ItemOrArray } from "../utils";
 import { Consumer, ConsumerSymbol, Provider, ProviderSymbol } from "./context";
 import { FragmentSymbol, Fragment } from "./fragment";
+import { RenderError } from "../render-error";
 
 type JSXElement = JSX.Tag | JSX.Component;
 type JSXItem = JSXElement | Consumer<any> | Provider<any> | typeof Fragment;
@@ -53,60 +54,71 @@ export function jsx(
 ): BlessedNode {
   const flatChildren = flatten(children);
   if (isExoticComponent(tag)) {
-    switch (tag.$$type) {
-      case FragmentSymbol:
-        return {
-          _name: tag.$$type.description!,
-          _children: flatChildren,
-          _rendered: flatChildren,
-        };
-      case ConsumerSymbol:
-        return tag({}, children[0] as (value: unknown) => BlessedNode);
-      case ProviderSymbol:
-        const value = (attributes as any)?.value;
-        return tag({ value }, children[0] as BlessedNode);
+    try {
+      switch (tag.$$type) {
+        case FragmentSymbol:
+          return {
+            _name: tag.$$type.description!,
+            _children: flatChildren,
+            _rendered: flatChildren,
+          };
+        case ConsumerSymbol:
+          return tag({}, children[0] as (value: unknown) => BlessedNode);
+        case ProviderSymbol:
+          const value = (attributes as any)?.value;
+          return tag({ value }, children[0] as BlessedNode);
+      }
+    } catch (err) {
+      throw new RenderError(err, tag.name);
     }
   }
   if (typeof tag === "function") {
     return () => {
-      pushHookState(getKey(tag, attributes));
-      const rendered = tag(attributes ?? {}, children);
-      popHookState();
-      return {
-        _name: tag.name,
-        _children: flatChildren,
-        _rendered: rendered,
-      };
+      try {
+        pushHookState(getKey(tag, attributes));
+        const rendered = tag(attributes ?? {}, children);
+        popHookState();
+        return {
+          _name: tag.name,
+          _children: flatChildren,
+          _rendered: rendered,
+        };
+      } catch (err) {
+        throw new RenderError(err, tag.name);
+      }
     };
   }
+  try {
+    const [actualAttributes, eventHandlers] = attributes
+      ? splitAttributes(attributes)
+      : [{}, {}];
 
-  const [actualAttributes, eventHandlers] = attributes
-    ? splitAttributes(attributes)
-    : [{}, {}];
+    const element = blessedElements[tag](actualAttributes as any);
 
-  const element = blessedElements[tag](actualAttributes as any);
+    // attach event handlers
+    Object.entries(eventHandlers).forEach(([type, handler]) => {
+      element.on(type, handler);
+    });
 
-  // attach event handlers
-  Object.entries(eventHandlers).forEach(([type, handler]) => {
-    element.on(type, handler);
-  });
+    // set special attributes
+    if (actualAttributes.ref) {
+      actualAttributes.ref.current = element;
+    }
+    applyClass(element, actualAttributes.className);
 
-  // set special attributes
-  if (actualAttributes.ref) {
-    actualAttributes.ref.current = element;
+    // append children
+    if (!("content" in actualAttributes)) {
+      element.content = "";
+    }
+    flatChildren.forEach((child) => appendChild(element, child));
+    return {
+      _name: tag,
+      _children: flatChildren,
+      _rendered: element,
+    };
+  } catch (err) {
+    throw new RenderError(err, tag);
   }
-  applyClass(element, actualAttributes.className);
-
-  // append children
-  if (!("content" in actualAttributes)) {
-    element.content = "";
-  }
-  flatChildren.forEach((child) => appendChild(element, child));
-  return {
-    _name: tag,
-    _children: flatChildren,
-    _rendered: element,
-  };
 }
 
 function splitAttributes<T extends keyof JSX.IntrinsicElements>(
