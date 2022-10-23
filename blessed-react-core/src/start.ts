@@ -28,13 +28,38 @@ export function Bootstrap(
     smartCSR: true,
     autoPadding: true,
     dockBorders: true,
-    title: component.name,
     useBCE: true,
   });
   if (options.autoRefresh) {
     setInterval(forceRerender, options.autoRefresh);
   }
   rerender();
+}
+
+export function renderIntoString(
+  component: () => BlessedNode,
+  terminalWidth: number,
+  terminalHeight: number
+): string {
+  if (!component) return "";
+  const screen = Reblessed.screen({
+    smartCSR: true,
+    autoPadding: true,
+    dockBorders: true,
+    useBCE: true,
+    width: terminalWidth,
+    height: terminalHeight,
+  });
+  screen.program.cols = terminalWidth;
+  screen.program.rows = terminalHeight;
+  addIntoScreen(component(), screen);
+  try {
+    screen.render();
+    return (screen.program as any)._buf;
+  } finally {
+    hookState.value = 0;
+    screen.destroy();
+  }
 }
 
 let lastTimeoutId: NodeJS.Timeout | undefined;
@@ -54,7 +79,7 @@ function rerender() {
       ch.destroy();
     });
     try {
-      addIntoScreen(rootComponent());
+      addIntoScreen(rootComponent(), screenObject);
       screenObject.render();
     } catch (err) {
       screenObject.destroy();
@@ -68,15 +93,14 @@ function rerender() {
   }
 }
 
-function addIntoScreen(blessedNode: BlessedNode) {
-  if (!screenObject) return;
+function addIntoScreen(blessedNode: BlessedNode, screen: Screen) {
   if (typeof blessedNode === "boolean" || blessedNode == null) return;
   if (typeof blessedNode === "function") {
-    addIntoScreen(blessedNode(""));
+    addIntoScreen(blessedNode(""), screen);
     return;
   }
   if (typeof blessedNode === "number" || typeof blessedNode === "string") {
-    screenObject.append(
+    screen.append(
       Reblessed.box({
         width: "100%",
         height: "100%",
@@ -84,10 +108,10 @@ function addIntoScreen(blessedNode: BlessedNode) {
       })
     );
   } else if (isElement(blessedNode._rendered)) {
-    screenObject.append(blessedNode._rendered);
+    screen.append(blessedNode._rendered);
   } else if (Array.isArray(blessedNode._rendered)) {
-    blessedNode._rendered.forEach((node) => addIntoScreen(node));
+    blessedNode._rendered.forEach((node) => addIntoScreen(node, screen));
   } else {
-    addIntoScreen(blessedNode._rendered);
+    addIntoScreen(blessedNode._rendered, screen);
   }
 }

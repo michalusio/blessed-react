@@ -6,7 +6,7 @@ import {
   FragmentSymbol,
   BlessedNode,
 } from "./jsx";
-import { Bootstrap, forceRerender } from "./start";
+import { Bootstrap, forceRerender, renderIntoString } from "./start";
 import { EnableDevelopmentMode } from "./mode";
 import { createContext } from "./jsx/context";
 import { lazy } from "./jsx/suspense";
@@ -27,4 +27,5 @@ export default {
   Fragment,
   createContext,
   lazy,
+  renderIntoString,
 };

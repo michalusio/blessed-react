@@ -2,11 +2,13 @@
   "files.exclude": {
     "node_modules": true,
     "dist": true,
-    ".parcel-cache": true
+    ".parcel-cache": true,
+    ".nyc_output": true
   },
   "search.exclude": {
     "node_modules": true,
     "dist": true,
-    ".parcel-cache": true
+    ".parcel-cache": true,
+    ".nyc_output": true
   }
 }

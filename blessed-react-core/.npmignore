@@ -1,7 +1,13 @@
 src
+tests
+coverage
+.nyc_output
 .vscode
 .parcel-cache
 tsconfig.json
+tsconfig.test.json
 yarn.lock
 node_modules
 .editorconfig
+dist/index.d.ts.map
+dist/index.js.map

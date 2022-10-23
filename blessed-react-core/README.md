@@ -60,7 +60,7 @@ Legend:
 
   - :heavy_check_mark: CSS watch and refresh-on-change
   - :hammer: Diagnostics
-  - :heavy_check_mark: Helpful Stacktrace
+  - :heavy_check_mark: Component Stacktrace
   - :o: Strict Mode
 
 - :o: Additional features

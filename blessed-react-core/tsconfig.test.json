@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "importsNotUsedAsValues": "preserve"
+  },
+  "include": ["./src/**/*.ts", "tests/**/*.ts", "tests/**/*.tsx"]
+}

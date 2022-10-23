@@ -1,4 +1,5 @@
 */dist
 */node_modules
 */tsbuild.json
+.nyc_output
 .parcel-cache

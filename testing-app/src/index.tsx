@@ -13,7 +13,6 @@ const App = () => {
 };
 
 const B = ({ top, color }: { top: number; color: string }) => {
-  throw new Error("something went wrong");
   return (
     <box className={styles.boxStyle} top={top} bg={color}>
       {color}
