@@ -3,6 +3,7 @@ import { hookState } from "./hooks/hook-base";
 import { BlessedNode } from "./jsx";
 import { RenderError } from "./render-error";
 import { isElement } from "./utils";
+import { PassThrough } from "node:stream";
 
 type BootstrapOptions = Readonly<{
   /**
@@ -52,12 +53,15 @@ export function renderIntoString(
   });
   screen.program.cols = terminalWidth;
   screen.program.rows = terminalHeight;
+  const outStream = new PassThrough();
+  screen.program.output = outStream;
   addIntoScreen(component(), screen);
   try {
     screen.render();
     return (screen.program as any)._buf;
   } finally {
     hookState.value = 0;
+    outStream.end();
     screen.destroy();
   }
 }
