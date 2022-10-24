@@ -21,4 +21,18 @@ describe("Intrinsics", () => {
       h
     );
   });
+  it("renders a progress bar", () => {
+    const component = () => (
+      <progressbar border={"line"} filled={40} ch="*" width={14} height={3} />
+    );
+
+    const output = BlessedReact.renderIntoString(component, w, h);
+
+    assertConsole(
+      output,
+      ["┌────────────┐", "│****        │", "└────────────┘"],
+      w,
+      h
+    );
+  });
 });

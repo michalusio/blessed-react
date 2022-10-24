@@ -55,10 +55,13 @@ export function renderIntoString(
   screen.program.rows = terminalHeight;
   const outStream = new PassThrough();
   screen.program.output = outStream;
-  addIntoScreen(component(), screen);
   try {
+    addIntoScreen(component(), screen);
     screen.render();
     return (screen.program as any)._buf;
+  } catch (err) {
+    screen.destroy();
+    throw new RenderError(err);
   } finally {
     hookState.value = 0;
     outStream.end();
@@ -87,7 +90,7 @@ function rerender() {
       screenObject.render();
     } catch (err) {
       screenObject.destroy();
-      throw new RenderError(err, rootComponent.name);
+      throw new RenderError(err);
     }
     hookState.value = 0;
   } catch (err) {
@@ -100,15 +103,18 @@ function rerender() {
 function addIntoScreen(blessedNode: BlessedNode, screen: Screen) {
   if (typeof blessedNode === "boolean" || blessedNode == null) return;
   if (typeof blessedNode === "function") {
-    addIntoScreen(blessedNode(""), screen);
-    return;
-  }
-  if (typeof blessedNode === "number" || typeof blessedNode === "string") {
+    addIntoScreen(blessedNode(), screen);
+  } else if (
+    typeof blessedNode === "number" ||
+    typeof blessedNode === "string"
+  ) {
+    const content = blessedNode + "";
     screen.append(
       Reblessed.box({
-        width: "100%",
-        height: "100%",
-        content: blessedNode + "",
+        width: content.length,
+        height: 1,
+        top: screen.children.length,
+        content,
       })
     );
   } else if (isElement(blessedNode._rendered)) {

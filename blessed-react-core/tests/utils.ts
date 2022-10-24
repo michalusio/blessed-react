@@ -121,7 +121,7 @@ const commands: [RegExp, Command][] = [
   ],
 ];
 
-export function parseMarks(output: string, cols: number, rows: number): string {
+function parseMarks(output: string, cols: number, rows: number): string {
   const terminalData = " "
     .repeat(rows)
     .split("")
@@ -157,7 +157,7 @@ export function parseMarks(output: string, cols: number, rows: number): string {
   return terminalData.map((r) => r.join("")).join("\n");
 }
 
-export function fillOut(input: string[], cols: number, rows: number): string {
+function fillOut(input: string[], cols: number, rows: number): string {
   const line = " ".repeat(cols);
   return [
     ...input.map((i) => i.padEnd(cols)),
@@ -165,6 +165,13 @@ export function fillOut(input: string[], cols: number, rows: number): string {
   ].join("\n");
 }
 
+/**
+ * Assert console output equality
+ * @param actual The console output to check. Color ANSI codes will be omitted.
+ * @param expected The expected console output.
+ * @param w The width of the virtual console screen
+ * @param h The height of the virtual console screen
+ */
 export function assertConsole(
   actual: string,
   expected: string[],

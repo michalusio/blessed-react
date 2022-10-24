@@ -1,6 +1,6 @@
 import { blessedElement } from "../blessing";
 import { applyClass } from "../css";
-import { hookState } from "../hooks/hook-base";
+import { hookState, RopeEntry } from "../hooks/hook-base";
 import { blessedElements, BlessedNode, ExoticComponent } from "./jsx";
 import { getKey } from "../key";
 import { flatten, isElement, ItemOrArray } from "../utils";
@@ -54,37 +54,43 @@ export function jsx(
 ): BlessedNode {
   const flatChildren = flatten(children);
   if (isExoticComponent(tag)) {
-    try {
-      switch (tag.$$type) {
-        case FragmentSymbol:
-          return {
-            _name: tag.$$type.description!,
-            _children: flatChildren,
-            _rendered: flatChildren,
-          };
-        case ConsumerSymbol:
-          return tag({}, children[0] as (value: unknown) => BlessedNode);
-        case ProviderSymbol:
-          const value = (attributes as any)?.value;
-          return tag({ value }, children[0] as BlessedNode);
-      }
-    } catch (err) {
-      throw new RenderError(err, tag.name);
+    switch (tag.$$type) {
+      case FragmentSymbol:
+        return {
+          _name: tag.$$type.description!,
+          _children: flatChildren,
+          _rendered: flatChildren,
+        };
+      case ConsumerSymbol:
+        return tag({}, children[0] as (value: unknown) => BlessedNode);
+      case ProviderSymbol:
+        const value = (attributes as any)?.value;
+        return tag({ value }, children[0] as BlessedNode);
     }
   }
   if (typeof tag === "function") {
+    const previousHookRope = [...hookState.rope];
+    const componentStackEntry = getComponentStackEntry();
     return () => {
+      const currentHookRope = [
+        ...previousHookRope,
+        {
+          componentName: getKey(tag, attributes),
+          stackEntry: componentStackEntry,
+        },
+      ];
+      const toRevertHookRope = setHookRope(currentHookRope);
       try {
-        pushHookState(getKey(tag, attributes));
         const rendered = tag(attributes ?? {}, children);
-        popHookState();
         return {
           _name: tag.name,
           _children: flatChildren,
           _rendered: rendered,
         };
       } catch (err) {
-        throw new RenderError(err, tag.name);
+        throw new RenderError(err, hookState.rope);
+      } finally {
+        setHookRope(toRevertHookRope);
       }
     };
   }
@@ -117,7 +123,7 @@ export function jsx(
       _rendered: element,
     };
   } catch (err) {
-    throw new RenderError(err, tag);
+    throw new RenderError(err);
   }
 }
 
@@ -159,7 +165,7 @@ function appendChild(element: blessedElement, child: BlessedNode) {
     return;
   }
   if (typeof child === "function") {
-    appendChild(element, child(""));
+    appendChild(element, child());
     return;
   }
   if (!child._rendered) {
@@ -175,12 +181,16 @@ function appendChild(element: blessedElement, child: BlessedNode) {
   }
 }
 
-function pushHookState(key: string) {
-  hookState.rope.push(key);
+function setHookRope(rope: RopeEntry[]): RopeEntry[] {
+  const r = hookState.rope;
+  hookState.rope = rope;
+  return r;
 }
 
-function popHookState() {
-  hookState.rope.pop();
+function getComponentStackEntry(): string {
+  const stack = new Error().stack;
+  const lines = stack?.split("\n");
+  return lines?.[3] ?? "";
 }
 
 function isExoticComponent(
