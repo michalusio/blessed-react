@@ -7,9 +7,11 @@ import { flatten, isElement, ItemOrArray } from "../utils";
 import { Consumer, ConsumerSymbol, Provider, ProviderSymbol } from "./context";
 import { FragmentSymbol, Fragment } from "./fragment";
 import { RenderError } from "../render-error";
+import { getMode } from "../mode";
 
 type JSXElement = JSX.Tag | JSX.Component;
-type JSXItem = JSXElement | Consumer<any> | Provider<any> | typeof Fragment;
+type AnyExoticComponent = Consumer<any> | Provider<any> | typeof Fragment;
+type JSXItem = JSXElement | AnyExoticComponent;
 
 type GetAttributesFor<T extends JSXItem> = T extends
   | Consumer<any>
@@ -72,14 +74,11 @@ export function jsx(
     const previousHookRope = [...hookState.rope];
     const componentStackEntry = getComponentStackEntry();
     return () => {
-      const currentHookRope = [
-        ...previousHookRope,
-        {
-          componentName: getKey(tag, attributes),
-          stackEntry: componentStackEntry,
-        },
-      ];
-      const toRevertHookRope = setHookRope(currentHookRope);
+      previousHookRope.push({
+        componentName: getKey(tag, attributes),
+        stackEntry: componentStackEntry,
+      });
+      const toRevertHookRope = setHookRope(previousHookRope);
       try {
         const rendered = tag(attributes ?? {}, children);
         return {
@@ -188,13 +187,13 @@ function setHookRope(rope: RopeEntry[]): RopeEntry[] {
 }
 
 function getComponentStackEntry(): string {
-  const stack = new Error().stack;
-  const lines = stack?.split("\n");
-  return lines?.[3] ?? "";
+  if (getMode() === "development") {
+    const stack = new Error().stack;
+    const lines = stack?.split("\n");
+    return lines?.[3] ?? "";
+  } else return "";
 }
 
-function isExoticComponent(
-  tag: any
-): tag is typeof Fragment | Consumer<unknown> | Provider<unknown> {
+function isExoticComponent(tag: any): tag is AnyExoticComponent {
   return (tag as ExoticComponent<any, any>).$$type != null;
 }

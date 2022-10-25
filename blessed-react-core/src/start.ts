@@ -3,7 +3,7 @@ import { hookState } from "./hooks/hook-base";
 import { BlessedNode } from "./jsx";
 import { RenderError } from "./render-error";
 import { isElement } from "./utils";
-import { PassThrough } from "node:stream";
+import { PassThrough, Writable } from "node:stream";
 
 type BootstrapOptions = Readonly<{
   /**
@@ -14,8 +14,13 @@ type BootstrapOptions = Readonly<{
 }>;
 
 let rootComponent: (() => BlessedNode) | undefined;
+let outputOverride: Writable | undefined;
 
 export let screenObject: Screen | undefined;
+
+export function OverrideOutput(output?: Writable) {
+  outputOverride = output;
+}
 
 export function Bootstrap(
   component: () => BlessedNode,
@@ -31,10 +36,21 @@ export function Bootstrap(
     dockBorders: true,
     useBCE: true,
   });
+  screenObject.program.output = outputOverride ?? screenObject.program.output;
+
   if (options.autoRefresh) {
     setInterval(forceRerender, options.autoRefresh);
   }
   rerender();
+}
+
+export function ResetBootstrap() {
+  try {
+    screenObject?.destroy();
+  } finally {
+    screenObject = undefined;
+    rootComponent = undefined;
+  }
 }
 
 export function renderIntoString(
