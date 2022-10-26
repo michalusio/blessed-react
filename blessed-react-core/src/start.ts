@@ -56,7 +56,8 @@ export function ResetBootstrap() {
 export function renderIntoString(
   component: () => BlessedNode,
   terminalWidth: number,
-  terminalHeight: number
+  terminalHeight: number,
+  term: string = "linux"
 ): string {
   if (!component) return "";
   const screen = Reblessed.screen({
@@ -66,6 +67,7 @@ export function renderIntoString(
     useBCE: true,
     width: terminalWidth,
     height: terminalHeight,
+    terminal: term,
   });
   screen.program.cols = terminalWidth;
   screen.program.rows = terminalHeight;
