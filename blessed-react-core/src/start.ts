@@ -57,14 +57,15 @@ export function renderIntoString(
   component: () => BlessedNode,
   terminalWidth: number,
   terminalHeight: number,
-  term: string = "linux"
+  term: string = "ansi"
 ): string {
   if (!component) return "";
   const screen = Reblessed.screen({
-    smartCSR: true,
+    smartCSR: false,
+    fastCSR: false,
     autoPadding: true,
     dockBorders: true,
-    useBCE: true,
+    useBCE: false,
     width: terminalWidth,
     height: terminalHeight,
     terminal: term,

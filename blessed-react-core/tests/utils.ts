@@ -137,6 +137,12 @@ const commands: [RegExp, Command][] = [
       });
     },
   ],
+  [
+    /\u001b(.{1,15}?[a-zA-Z])/g,
+    (m, t, c, w, h) => {
+      console.log("ESC", m[1].split("").join(" "));
+    },
+  ],
 ];
 
 function parseMarks(output: string, cols: number, rows: number): string {
