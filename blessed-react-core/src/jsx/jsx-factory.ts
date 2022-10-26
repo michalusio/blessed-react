@@ -167,9 +167,6 @@ function appendChild(element: blessedElement, child: BlessedNode) {
     appendChild(element, child());
     return;
   }
-  if (!child._rendered) {
-    return;
-  }
   const render = child._rendered;
   if (isElement(render)) {
     element.append(render);
