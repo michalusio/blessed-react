@@ -30,9 +30,9 @@
   "private": false,
   "scripts": {
     "build": "parcel build",
-    "test": "ts-mocha -p tsconfig.test.json tests/**/*.tsx",
-    "test-watch": "ts-mocha -p tsconfig.test.json tests/**/*.tsx -w --watch-files '**/*.ts,**/*.tsx'",
-    "test-coverage": "nyc --reporter=text ts-mocha -p tsconfig.test.json --parallel tests/**/*.tsx"
+    "test": "ts-mocha -p tsconfig.test.json \"tests/**/*.tsx\"",
+    "test-watch": "ts-mocha -p tsconfig.test.json \"tests/**/*.tsx\" -w --watch-files \"**/*.ts,**/*.tsx\"",
+    "test-coverage": "nyc --reporter=text ts-mocha -p tsconfig.test.json --parallel \"tests/**/*.tsx\""
   },
   "dependencies": {
     "@adobe/css-tools": "^4.0.1",

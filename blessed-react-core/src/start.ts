@@ -57,7 +57,7 @@ export function renderIntoString(
   component: () => BlessedNode,
   terminalWidth: number,
   terminalHeight: number,
-  term: string = "ansi"
+  term: string = "windows-ansi"
 ): string {
   if (!component) return "";
   const screen = Reblessed.screen({
@@ -65,6 +65,8 @@ export function renderIntoString(
     fastCSR: false,
     autoPadding: true,
     dockBorders: true,
+    forceUnicode: true,
+    fullUnicode: true,
     useBCE: false,
     width: terminalWidth,
     height: terminalHeight,
