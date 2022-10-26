@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2021",
+    "target": "ES2018",
     "jsx": "react",
     "jsxFactory": "BlessedReact.jsx",
     "jsxFragmentFactory": "BlessedReact.Fragment",
