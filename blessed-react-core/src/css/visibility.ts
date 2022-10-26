@@ -1,16 +1,19 @@
 import { AnyElement } from "../utils";
 
-export function applyVisibility(classData: Record<string, string>, element: AnyElement): Record<string, string> {
+export function applyVisibility(
+  classData: Record<string, string>,
+  element: AnyElement
+): Record<string, string> {
   const { visibility, ...rest } = classData;
 
   switch (visibility) {
-    case 'hidden':
-    case 'collapse':
+    case "hidden":
+    case "collapse":
       element.hidden = true;
-    break;
-    case 'visible':
+      break;
+    case "visible":
       element.hidden = false;
-    break;
+      break;
   }
 
   return rest;

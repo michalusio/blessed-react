@@ -97,6 +97,10 @@ export function jsx(
     const [actualAttributes, eventHandlers] = attributes
       ? splitAttributes(attributes)
       : [{}, {}];
+    const className = actualAttributes.className;
+    delete actualAttributes.className;
+    const ref = actualAttributes.ref;
+    delete actualAttributes.ref;
 
     const element = blessedElements[tag](actualAttributes as any);
 
@@ -106,10 +110,10 @@ export function jsx(
     });
 
     // set special attributes
-    if (actualAttributes.ref) {
-      actualAttributes.ref.current = element;
+    if (ref) {
+      ref.current = element;
     }
-    applyClass(element, actualAttributes.className);
+    applyClass(element, className);
 
     // append children
     if (!("content" in actualAttributes)) {

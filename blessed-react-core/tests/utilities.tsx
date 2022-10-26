@@ -119,7 +119,7 @@ describe("Utilities", () => {
         );
       });
 
-      it("without the stack", () => {
+      it("even without the stack", () => {
         const Component = () => {
           const err = new Error("Something happened!");
           err.stack = undefined;
