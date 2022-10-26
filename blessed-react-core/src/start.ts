@@ -67,6 +67,8 @@ export function renderIntoString(
     dockBorders: true,
     useBCE: false,
     width: terminalWidth,
+    cols: terminalWidth,
+    rows: terminalHeight,
     height: terminalHeight,
     terminal: term,
   });
