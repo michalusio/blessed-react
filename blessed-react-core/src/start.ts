@@ -65,8 +65,6 @@ export function renderIntoString(
     fastCSR: false,
     autoPadding: true,
     dockBorders: true,
-    forceUnicode: true,
-    fullUnicode: true,
     useBCE: false,
     width: terminalWidth,
     height: terminalHeight,
