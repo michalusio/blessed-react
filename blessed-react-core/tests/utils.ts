@@ -9,6 +9,8 @@ type Command = (
   h: number
 ) => void;
 
+let savedCursorPos: Cursor = { x: 0, y: 0 };
+
 const commands: [RegExp, Command][] = [
   [
     /\u001B\[\d+(?:;\d+)?m/g,
@@ -98,6 +100,22 @@ const commands: [RegExp, Command][] = [
       //console.log("pos", 1, 1);
       c.x = 0;
       c.y = 0;
+    },
+  ],
+  [
+    /\u001b7/g,
+    (m, t, c) => {
+      //console.log("savePos");
+      savedCursorPos.x = c.x;
+      savedCursorPos.y = c.y;
+    },
+  ],
+  [
+    /\u001b8/g,
+    (m, t, c) => {
+      //console.log("restorePos");
+      c.x = savedCursorPos.x;
+      c.y = savedCursorPos.y;
     },
   ],
   [
