@@ -60,6 +60,7 @@ export function renderIntoString(
   term: string = "windows-ansi"
 ): string {
   if (!component) return "";
+  const outStream = new PassThrough();
   const screen = Reblessed.screen({
     smartCSR: false,
     fastCSR: false,
@@ -67,19 +68,18 @@ export function renderIntoString(
     dockBorders: true,
     useBCE: false,
     width: terminalWidth,
+    height: terminalHeight,
     cols: terminalWidth,
     rows: terminalHeight,
-    height: terminalHeight,
     terminal: term,
   });
   screen.program.cols = terminalWidth;
   screen.program.rows = terminalHeight;
-  const outStream = new PassThrough();
   screen.program.output = outStream;
   try {
     addIntoScreen(component(), screen);
     screen.render();
-    return (screen.program as any)._buf;
+    return screen.screenshot() as unknown as string;
   } catch (err) {
     screen.destroy();
     throw new RenderError(err);
