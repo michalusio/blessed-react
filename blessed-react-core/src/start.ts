@@ -57,7 +57,7 @@ export function renderIntoString(
   component: () => BlessedNode,
   terminalWidth: number,
   terminalHeight: number,
-  term: string = "vterm"
+  term: string = "dumb"
 ): string {
   if (!component) return "";
   const outStream = new PassThrough();
