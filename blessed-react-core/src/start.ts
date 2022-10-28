@@ -57,7 +57,7 @@ export function renderIntoString(
   component: () => BlessedNode,
   terminalWidth: number,
   terminalHeight: number,
-  term: string = "windows-ansi"
+  term: string = "vterm"
 ): string {
   if (!component) return "";
   const outStream = new PassThrough();
