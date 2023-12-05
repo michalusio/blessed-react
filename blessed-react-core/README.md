@@ -19,18 +19,18 @@ Legend:
 - :heavy_check_mark: No dependency on actual React
 - :o: Support of other forks of `blessed`
 
-- :heavy_check_mark: Defining nodes using JSX:
+- :heavy_check_mark: Defining nodes using JSX
 
   - :heavy_check_mark: Support for all `blessed` nodes
   - :o: Support for all `blessed-contrib` nodes
   - :o: Diffing the state to replace only changed nodes
 
-- :heavy_check_mark: Loading CSS files:
+- :heavy_check_mark: Loading CSS files
 
   - :heavy_check_mark: Applying CSS classes to elements
   - :o: Other selectors support (`*`, `>`, `~`, etc.)
   - :o: CSS scoping
-  - :hammer: Styling:
+  - :hammer: Styling
     - :heavy_check_mark: `border`, `border-width`, `border-color`, `border-style` (top|right|bottom|left)
     - :heavy_check_mark: `padding` (top|right|bottom|left)
     - :x: `margin` - not supported by blessed
@@ -41,7 +41,7 @@ Legend:
     - :heavy_check_mark: `top`, `right`, `bottom`, `left`
     - :o: Others
 
-- :heavy_check_mark: Hooks:
+- :heavy_check_mark: Hooks
 
   - :heavy_check_mark: useState
   - :heavy_check_mark: useEffect
